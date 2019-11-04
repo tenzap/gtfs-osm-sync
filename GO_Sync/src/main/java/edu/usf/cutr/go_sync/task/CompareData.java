@@ -755,7 +755,7 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
                 if (network != null)
                     ostring = network;
                 else ostring = operator;
- 
+
                 Route er;
                 er = new Route(tripId, routeShortName, ostring);
 
@@ -1002,16 +1002,17 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
             progressToUpdate = 50/totalOsmNode;
         }
         int currentTotalProgress=0;
-        for (int osmindex=0; osmindex<totalOsmNode; osmindex++){
+//        for (int osmindex=0; osmindex<totalOsmNode; osmindex++){
+        OSMTags.parallelStream().forEach(osmtag -> {
+            int osmindex = OSMTags.indexOf(osmtag);
             if(this.flagIsDone)
                 return;
-            if((osmindex%timeToUpdate)==0) {
+/*            if((osmindex%timeToUpdate)==0) {
                 currentTotalProgress += progressToUpdate;
                 updateProgress(progressToUpdate);
                 this.setMessage("Comparing "+osmindex+"/"+totalOsmNode+" ...");
-            }
-            Hashtable<String,String> osmtag = new Hashtable<String,String>();
-            osmtag.putAll(OSMTags.get(osmindex));
+            }*/
+//            Hashtable<String, String> osmtag = new Hashtable<String, String>(OSMTags.get(osmindex));
             String osmOperator = (String)osmtag.get(tag_defs.OSM_NETWORK_KEY);
             String osmStopID = (String)osmtag.get("gtfs_id");
             String osmPlatformType = (String)osmtag.get(tag_defs.OSM_STOP_TYPE_KEY);
@@ -1235,7 +1236,7 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
                     }
                 }
             }
-        }
+        });
         // set OSM value to all stops in modify category
         setStopWithOsmDataDefault();
         //make sure is 50% overall
