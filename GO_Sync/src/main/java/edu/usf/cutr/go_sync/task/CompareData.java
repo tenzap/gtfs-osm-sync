@@ -37,6 +37,7 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.JTextArea;
 import javax.swing.ProgressMonitor;
@@ -1003,15 +1004,17 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
         }
         int currentTotalProgress=0;
 //        for (int osmindex=0; osmindex<totalOsmNode; osmindex++){
+        AtomicInteger osmprog= new AtomicInteger();
         OSMTags.parallelStream().forEach(osmtag -> {
             int osmindex = OSMTags.indexOf(osmtag);
             if(this.flagIsDone)
                 return;
-/*            if((osmindex%timeToUpdate)==0) {
-                currentTotalProgress += progressToUpdate;
+            osmprog.getAndIncrement();
+            if((osmprog.get()%timeToUpdate)==0) {
+//                currentTotalProgress += progressToUpdate;
                 updateProgress(progressToUpdate);
-                this.setMessage("Comparing "+osmindex+"/"+totalOsmNode+" ...");
-            }*/
+                this.setMessage("Comparing "+osmprog.get()+"/"+totalOsmNode+" ...");
+            }
 //            Hashtable<String, String> osmtag = new Hashtable<String, String>(OSMTags.get(osmindex));
             String osmOperator = (String)osmtag.get(tag_defs.OSM_NETWORK_KEY);
             String osmStopID = (String)osmtag.get("gtfs_id");
