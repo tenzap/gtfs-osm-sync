@@ -154,7 +154,7 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
         RANGE= newRange;
         DELTA = RANGE/100000;
     }
-
+/*
     public List<Stop> convertToStopObject(List<AttributesImpl> eNodes, String agencyName){
         List<Stop> stops = new ArrayList<Stop>(eNodes.size());
         for (int i=0; i<eNodes.size(); i++){
@@ -163,7 +163,7 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
         }
         return stops;
     }
-
+*/
     public void getBoundingBox(){
         // Get bound
         Iterator<Stop> it = GTFSstops.iterator();
@@ -209,8 +209,8 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
         System.out.println("Lon, Lat format = "+minLon+","+minLat + "      " + maxLon + "," + maxLat);
 
         List<Stop> boundList = new ArrayList<Stop>(2);
-        boundList.add(new Stop("-1","Min Lat Min Lon", "UNKNOWN", Double.toString(minLat),Double.toString(minLon)));
-        boundList.add(new Stop("-1","Max Lat Max Lon", "UNKNOWN",Double.toString(maxLat),Double.toString(maxLon)));
+        boundList.add(new Stop("-1","Min Lat Min Lon", "UNKNOWN", Double.toString(minLat),Double.toString(minLon), null, null));
+        boundList.add(new Stop("-1","Max Lat Max Lon", "UNKNOWN",Double.toString(maxLat),Double.toString(maxLon), null, null));
 
     }
 
@@ -674,6 +674,8 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
                 osmOperator = "missing";
             }
             String osmStopName = (String)osmtag.get("name");
+            List<String> osmStopAltNamesList = Stop.stopAltNamesToList((String)osmtag.get("alt_name"));
+            
             AttributesImpl node = OSMNodes.get(osmindex);
             String version = Integer.toString(Integer.parseInt(node.getValue("version")));
             if (isOp) {
@@ -695,7 +697,7 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
 
                                 osmActiveUsers.add(node.getValue("user"));
 
-                                Stop es = new Stop(osmStopID, osmOperator, osmStopName, node.getValue("lat"), node.getValue("lon"));
+                                Stop es = new Stop(osmStopID, osmOperator, osmStopName, node.getValue("lat"), node.getValue("lon"), null, osmStopAltNamesList);
                                 es.addTags(osmtag);
                                 es.setOsmId(node.getValue("id"));
                                 es.setLastEditedOsmUser(node.getValue("user"));
@@ -729,7 +731,7 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
 
                                 osmActiveUsers.add(node.getValue("user"));
 
-                                Stop es = new Stop(osmStopID, osmOperator, osmStopName, node.getValue("lat"), node.getValue("lon"));
+                                Stop es = new Stop(osmStopID, osmOperator, osmStopName, node.getValue("lat"), node.getValue("lon"), null, osmStopAltNamesList);
                                 es.addTags(osmtag);
                                 es.setOsmId(node.getValue("id"));
                                 es.setLastEditedOsmUser(node.getValue("user"));
@@ -770,7 +772,7 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
 
                                 osmActiveUsers.add(node.getValue("user"));
 
-                                Stop es = new Stop(osmStopID, osmOperator, osmStopName, node.getValue("lat"), node.getValue("lon"));
+                                Stop es = new Stop(osmStopID, osmOperator, osmStopName, node.getValue("lat"), node.getValue("lon"), null, osmStopAltNamesList);
                                 es.addTags(osmtag);
                                 es.setOsmId(node.getValue("id"));
                                 es.setLastEditedOsmUser(node.getValue("user"));
@@ -840,7 +842,7 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
 
                                 noUpload.add(ns);
                                 osmIdToGtfsId.put(node.getValue("id"), gtfsStop.getStopID());
-                                Stop es = new Stop(osmStopID, osmOperator, osmStopName, node.getValue("lat"), node.getValue("lon"));
+                                Stop es = new Stop(osmStopID, osmOperator, osmStopName, node.getValue("lat"), node.getValue("lon"), null, osmStopAltNamesList);
                                 es.addTags(osmtag);
                                 es.setOsmId(node.getValue("id"));
                                 es.setOsmVersion(version);

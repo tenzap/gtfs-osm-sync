@@ -25,6 +25,9 @@ import edu.usf.cutr.go_sync.object.OperatorInfo;
 import edu.usf.cutr.go_sync.object.Route;
 import edu.usf.cutr.go_sync.object.Stop;
 import edu.usf.cutr.go_sync.tools.OsmFormatter;
+import edu.usf.cutr.go_sync.object.NetexQuay;
+import edu.usf.cutr.go_sync.object.NetexStopPlace;
+import javax.xml.parsers.SAXParserFactory;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -36,13 +39,25 @@ public class GTFSReadIn {
     private static final String NTD_ID_KEY = "ntd_id";
 
     private List<Stop> stops;
+    HashMap <String, NetexQuay> netexQuays;
+    HashMap <String, NetexStopPlace> netexSites;
 
     public GTFSReadIn() {
         stops = new ArrayList<Stop>();
         allRoutes = new Hashtable<String, Route>();
 //        readBusStop("C:\\Users\\Khoa Tran\\Desktop\\Summer REU\\Khoa_transit\\stops.txt");
-    }
+        try {
+            String pathToNetex = "/mnt/packages/downloads/fluo-grand-est-fluo68-netex/Arrets.xml";
+            File nextFile = new File(pathToNetex);
+            NetexParser netexParser = new NetexParser();
+            SAXParserFactory.newInstance().newSAXParser().parse(nextFile, netexParser);
+            netexQuays = netexParser.getQuayList();
+            netexSites = netexParser.getLogicalSiteList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+    }
     public static Set<String> getAllRoutesID(){
         return allRoutes.keySet();
     }
@@ -133,7 +148,8 @@ public class GTFSReadIn {
                 elements = hm.values().toArray(elements);
                  //add leading 0's to gtfs_id
                     String tempStopId = OsmFormatter.getValidBusStopId(elements[stopIdKey]);
-                    Stop s = new Stop(tempStopId, agencyName, elements[stopNameKey],elements[stopLatKey],elements[stopLonKey]);
+                    System.out.println("Reading stop from gtfs: " + tempStopId.toString());
+                    Stop s = new Stop(tempStopId, agencyName, elements[stopNameKey],elements[stopLatKey],elements[stopLonKey], getNetexQuayName(tempStopId), getNetexQuayAltNames(tempStopId));
                     HashSet<String> keysn = new HashSet<String>(keysIndex.keySet());
                     Iterator it = keysn.iterator();
                     try {
@@ -431,5 +447,25 @@ public class GTFSReadIn {
             text = String.join(";",routeRefSet);
         }
         return text;
+    }
+
+    public String getNetexQuayName(String gtfsId) {
+        //System.out.println("getName for " + gtfsId);
+        if (gtfsId.startsWith("S")) {
+            return netexSites.get(gtfsId).getName();
+        } else {
+            return netexQuays.get(gtfsId).getName();
+        }
+    }
+
+    public List<String> getNetexQuayAltNames(String gtfsId) {
+        //System.out.println("getAlt Name for " + gtfsId);
+        if (gtfsId.startsWith("S")) {
+            List<String> altNames = new ArrayList<String>();
+            altNames.add(netexSites.get(gtfsId).getAltName());
+            return altNames;
+        } else {
+            return netexQuays.get(gtfsId).getAltNames();
+        }
     }
 }
