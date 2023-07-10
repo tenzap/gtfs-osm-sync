@@ -29,7 +29,7 @@ import java.util.Iterator;
 public class Route extends OsmPrimitive implements Comparable{
     private String routeId, routeRef, operatorName;
     private HashSet<RelationMember> osmMembers;
-    private final String route_id_key = "gtfs_route_id";
+    private final String route_id_key = "gtfs:route_id";
 
     public Route(String rId, String rRef, String op) {
         osmTags = new Hashtable();
