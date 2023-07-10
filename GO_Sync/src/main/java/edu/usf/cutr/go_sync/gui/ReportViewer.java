@@ -402,7 +402,8 @@ public class ReportViewer extends javax.swing.JFrame implements TableModelListen
                 unci++;*/
             if ((category.equals("MODIFY") || category.equals("NOTHING_NEW")) && numEquiv==1) {
                 //String stopID, String operatorName, String stopName, String lat, String lon
-                Stop stopWithSelectedTags = new Stop(osmStop.getPrimitiveType(), newStop.getStopID(), newStop.getOperatorName(), osmStop.getStopName(), osmStop.getLat(), osmStop.getLon());
+                List<String> osmStopAltNamesList = Stop.stopAltNamesToList((String) osmStop.getStopAltName());
+                Stop stopWithSelectedTags = new Stop(osmStop.getPrimitiveType(), newStop.getStopID(), newStop.getOperatorName(), osmStop.getStopName(), osmStop.getLat(), osmStop.getLon(), null);
                 Stop agencyStop = agencyStops.get(newStop.getStopID());
                 Hashtable<String, String> agencyTags = agencyStop.getTags();
                 Hashtable<String, String> osmTags = osmStop.getTags();
