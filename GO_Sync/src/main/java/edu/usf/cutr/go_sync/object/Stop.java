@@ -47,7 +47,7 @@ public class Stop extends OsmPrimitive implements Comparable{
         osmTags.put(GTFS_STOP_ID_KEY, stopID);
         osmTags.put(GTFS_OPERATOR_KEY, operatorName);
         
-        System.out.println("Creating stop " + stopID.toString());
+        //System.out.println("Creating stop " + stopID.toString());
         // Use Quay Name of NetEx instead of GTFS (netexQuayName is null is not created with GTFSReadIn)
         if (netexQuayName != null) {
             osmTags.put(GTFS_NAME_KEY, netexQuayName);
