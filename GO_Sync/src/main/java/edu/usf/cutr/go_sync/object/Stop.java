@@ -37,8 +37,9 @@ public class Stop extends OsmPrimitive implements Comparable{
     private final String GTFS_NAME_KEY		= tag_defs.GTFS_NAME_KEY;
     private String lat, lon;
     private HashSet<Route> routes;
-    public Stop(String stopID, String operatorName, String stopName, String lat, String lon,
+    public Stop(String osmPrimitiveType, String stopID, String operatorName, String stopName, String lat, String lon,
             String netexQuayName, List<String> netexQuayAltNames) {
+        super(osmPrimitiveType);
         osmTags = new Hashtable();
         if (operatorName == null || operatorName.equals("")) operatorName="none";
         if (stopID == null || stopID.equals("")) stopID="none";
@@ -78,6 +79,7 @@ public class Stop extends OsmPrimitive implements Comparable{
     }
 
     public Stop(Stop s) {
+        super(s.primitiveType);
         this.osmTags = new Hashtable();
         this.osmTags.putAll(s.osmTags);
 //        this.osmTags.put("highway", "bus_stop");
@@ -107,6 +109,7 @@ public class Stop extends OsmPrimitive implements Comparable{
         this.setStatus(s.getStatus());
         this.setLastEditedOsmDate(s.getLastEditedOsmDate());
         this.setLastEditedOsmUser(s.getLastEditedOsmUser());
+        this.wayNdRefs.addAll(s.wayNdRefs);
         routes = new HashSet<Route>();
         routes.addAll(s.getRoutes());
     }
@@ -229,5 +232,9 @@ public class Stop extends OsmPrimitive implements Comparable{
     @Override
     public String toString(){
         return this.getStopID();
+    }
+
+    public String getOsmPublicTransportType() {
+        return (String) osmTags.get(tag_defs.OSM_STOP_TYPE_KEY);
     }
 }

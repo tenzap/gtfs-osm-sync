@@ -149,8 +149,8 @@ public class GTFSReadIn {
                 String public_transport_type = "";
                  //add leading 0's to gtfs_id
                     String tempStopId = OsmFormatter.getValidBusStopId(elements[stopIdKey]);
-                    System.out.println("Reading stop from gtfs: " + tempStopId.toString());
-                    Stop s = new Stop(tempStopId, agencyName, elements[stopNameKey],elements[stopLatKey],elements[stopLonKey], getNetexQuayName(tempStopId), getNetexQuayAltNames(tempStopId));
+                    //System.out.println("Reading stop from gtfs: " + tempStopId.toString());
+                    Stop s = new Stop("node", tempStopId, agencyName, elements[stopNameKey],elements[stopLatKey],elements[stopLonKey], getNetexQuayName(tempStopId), getNetexQuayAltNames(tempStopId));
                     HashSet<String> keysn = new HashSet<String>(keysIndex.keySet());
                     Iterator it = keysn.iterator();
                     try {

@@ -32,6 +32,7 @@ public class Route extends OsmPrimitive implements Comparable{
     private final String route_id_key = "gtfs:route_id";
 
     public Route(String rId, String rRef, String op) {
+        super("relation");
         osmTags = new Hashtable();
         osmMembers = new HashSet<RelationMember>();
         routeId = rId;
@@ -41,6 +42,7 @@ public class Route extends OsmPrimitive implements Comparable{
     }
 
     public Route(Route r) {
+        super("relation");
         this.osmTags = new Hashtable();
         if(r.osmTags!=null) this.osmTags.putAll(r.osmTags);
         this.osmMembers = new HashSet<RelationMember>();

@@ -53,6 +53,7 @@ import edu.usf.cutr.go_sync.tools.parser.BusStopParser;
 import edu.usf.cutr.go_sync.tools.parser.ChangesetDownloadParser;
 import edu.usf.cutr.go_sync.tools.parser.OsmVersionParser;
 import edu.usf.cutr.go_sync.tools.parser.RouteParser;
+import edu.usf.cutr.go_sync.tools.parser.NodeWayAttr;
 import edu.usf.cutr.go_sync.tag_defs;
 import java.util.Arrays;
 /**
@@ -64,7 +65,7 @@ public class HttpRequest {
     private static final String API_VERSION ="0.6";
     private static final String OSM_HOST = "https://openstreetmap.org/api/0.6/";
 
-    private ArrayList<AttributesImpl> existingNodes = new ArrayList<AttributesImpl>();
+    private ArrayList<NodeWayAttr> existingNodes = new ArrayList<NodeWayAttr>();
     private ArrayList<AttributesImpl> existingRelations = new ArrayList<AttributesImpl>();
     private ArrayList<Hashtable> existingBusTags = new ArrayList<Hashtable>();
     private ArrayList<Hashtable> existingRelationTags = new ArrayList<Hashtable>();
@@ -108,7 +109,7 @@ public class HttpRequest {
         }
     }
 
-    public ArrayList<AttributesImpl> getExistingBusStops(String left, String bottom, String right, String top) throws InterruptedException{
+    public ArrayList<NodeWayAttr> getExistingBusStops(String left, String bottom, String right, String top) throws InterruptedException{
         //http://open.mapquestapi.com/xapi/
         //"http://www.informationfreeway.org"
 //        String urlSuffix = "/api/0.6/node[highway=bus_stop][bbox="+left+","+bottom+","+right+","+top+"]";
@@ -131,12 +132,7 @@ public class HttpRequest {
     			"<has-kv k='public_transport' v='platform'/>"+
     			"<bbox-query w='left' e='right' s='bottom' n='north'/>"+
     			"</query>"+
-                """
-                  <union>
-                    <item/>
-                    <recurse type="down"/>
-                  </union>
-                """+
+                        "<union><item/><recurse type='down'/></union>"+
 
     			"<query type='node'>" +
     			"<has-kv k='public_transport' v='station'/>"+
@@ -310,13 +306,13 @@ public class HttpRequest {
 //            InputSource inputSource = new InputSource("DataFromServerRELATION.osm");
             BusStopParser par = new BusStopParser();
             SAXParserFactory.newInstance().newSAXParser().parse(inputSource, par);
-            AttributesImpl attImplNode = par.getOneNode();
+            NodeWayAttr attImplNode = par.getOneNode();
             Hashtable tags = par.getTagsOneNode();
             
             String[] osmStopAltNames = ((String)tags.get("alt_name")).split(";");
             List<String> osmStopAltNamesList = new ArrayList<>(Arrays.asList(osmStopAltNames));
 
-            st = new Stop(null,(String)tags.get(tag_defs.GTFS_OPERATOR_KEY),(String)tags.get("name"),
+            st = new Stop("node", null,(String)tags.get(tag_defs.GTFS_OPERATOR_KEY),(String)tags.get("name"),
                     attImplNode.getValue("lat"),attImplNode.getValue("lon"), null, osmStopAltNamesList);
             st.addTags(tags);
             if (!isNew) {

@@ -52,7 +52,7 @@ public class ChangesetDownloadParser extends DefaultHandler{
             AttributesImpl attImpl = new AttributesImpl(attributes);
             String osmid = attImpl.getValue("id");
             String version = attImpl.getValue("version");
-            Stop s = new Stop(osmid, null,null,"0","0", null, null);
+            Stop s = new Stop("node", osmid, null,null,"0","0", null, null);
             s.setOsmId(osmid);
             s.setOsmVersion(version);
             if (status.equals("create")) {

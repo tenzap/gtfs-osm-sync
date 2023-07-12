@@ -416,7 +416,7 @@ public class ReportViewer extends javax.swing.JFrame implements TableModelListen
             if ((category.equals("MODIFY") || category.equals("NOTHING_NEW")) && numEquiv==1) {
                 //String stopID, String operatorName, String stopName, String lat, String lon
                 List<String> osmStopAltNamesList = Stop.stopAltNamesToList((String) osmStop.getStopAltName());
-                Stop stopWithSelectedTags = new Stop(newStop.getStopID(), newStop.getOperatorName(), osmStop.getStopName(), osmStop.getLat(), osmStop.getLon(), null, osmStopAltNamesList);
+                Stop stopWithSelectedTags = new Stop(osmStop.getPrimitiveType(), newStop.getStopID(), newStop.getOperatorName(), osmStop.getStopName(), osmStop.getLat(), osmStop.getLon(), null, osmStopAltNamesList);
                 Stop agencyStop = agencyStops.get(newStop.getStopID());
                 Hashtable<String, String> agencyTags = agencyStop.getTags();
                 Hashtable<String, String> osmTags = osmStop.getTags();
@@ -579,6 +579,11 @@ public class ReportViewer extends javax.swing.JFrame implements TableModelListen
         // set new size to the table
         stopTableModel = new TagReportTableModel(tagKeys.size()+2);
         dataTable.setModel(stopTableModel);
+        if (selectedOsmStop!=null && selectedOsmStop.getPrimitiveType().equals("way")) {
+            dataTable.setGridColor(new Color(0xCCFFCC));
+        } else {
+            dataTable.setGridColor(new Color(0xEBEBEB));
+        }
 
         // the same as tagKeys. For the purpose of using for loop
         ArrayList<String> tkeys = new ArrayList<String>();
@@ -590,8 +595,13 @@ public class ReportViewer extends javax.swing.JFrame implements TableModelListen
         ArrayList<Boolean> finalCB = finalCheckboxes.get(selectedNewStop.getStopID());
 
         if(selectedOsmStop!=null) {
+          if (selectedOsmStop.getPrimitiveType().equals("way")) {
+            stopTableModel.setRowValueAt(new Object[] {"lat", agencyStop.getLat(), finalCB.get(0), "",finalCB.get(1), ""}, 0);
+            stopTableModel.setRowValueAt(new Object[] {"lon", agencyStop.getLon(), finalCB.get(2), "", finalCB.get(3), ""}, 1);
+          } else {
             stopTableModel.setRowValueAt(new Object[] {"lat", agencyStop.getLat(), finalCB.get(0), selectedOsmStop.getLat(), finalCB.get(1), finalSt.getLat()}, 0);
             stopTableModel.setRowValueAt(new Object[] {"lon", agencyStop.getLon(), finalCB.get(2), selectedOsmStop.getLon(), finalCB.get(3), finalSt.getLon()}, 1);
+          }
         } else {
             stopTableModel.setRowValueAt(new Object[] {"lat", agencyStop.getLat(), finalCB.get(0), "",finalCB.get(1), finalSt.getLat()}, 0);
             stopTableModel.setRowValueAt(new Object[] {"lon", agencyStop.getLon(), finalCB.get(2), "", finalCB.get(3), finalSt.getLon()}, 1);
@@ -2686,6 +2696,8 @@ public class ReportViewer extends javax.swing.JFrame implements TableModelListen
                 //broken
 //                int newOSMVersion = Integer.parseInt(selectedOSMStop.getOsmVersion());
 //                st.setOsmVersion(Integer.toString(newOSMVersion + 1));
+                st.setPrimitiveType(selectedOSMStop.getPrimitiveType());
+                st.setWayNdRefs(selectedOSMStop.getWayNdRefs());
             }
             generateStopsToUploadFlag=false;
             //finalStopsAccepted.put(selectedGtfs,selectedGtfsStop);
@@ -2701,6 +2713,8 @@ public class ReportViewer extends javax.swing.JFrame implements TableModelListen
                 selectedGtfsStop.setOsmId(selectedOSMStop.getOsmId());
                 int newOSMVersion = Integer.parseInt(selectedOSMStop.getOsmVersion());
                 selectedGtfsStop.setOsmVersion(Integer.toString(newOSMVersion + 1));
+                selectedGtfsStop.setPrimitiveType(selectedOSMStop.getPrimitiveType());
+                selectedGtfsStop.setWayNdRefs(selectedOSMStop.getWayNdRefs());
             }// stops to finish
             if(stopsToFinish.contains(selectedGtfsStop.toString()))
             {
@@ -2737,6 +2751,8 @@ public class ReportViewer extends javax.swing.JFrame implements TableModelListen
 //                    int newOSMVersion = Integer.parseInt(selectedOSMStop.getOsmVersion());
                         st.setOsmVersion(selectedOsmStop.getOsmVersion());
                     }
+                    st.setPrimitiveType(selectedOsmStop.getPrimitiveType());
+                    st.setWayNdRefs(selectedOsmStop.getWayNdRefs());
                     st.setReportCategory("MODIFY");
                     usedOSMstops.put(selectedOSMStop.getOsmId(),st); //TODO do this properly
                 }
