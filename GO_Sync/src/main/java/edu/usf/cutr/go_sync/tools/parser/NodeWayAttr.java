@@ -31,8 +31,8 @@ public class NodeWayAttr extends AttributesImpl {
     }
 
     public void setWayNds(ArrayList<String> wayNds) {
-        System.out.println("Adding " + wayNds.size() + " nds to way.");
-        System.out.println(wayNds.toString());
+        //System.out.println("Adding " + wayNds.size() + " nds to way.");
+        //System.out.println(wayNds.toString());
         this.wayNds = wayNds;
     }
     
