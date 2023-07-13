@@ -94,6 +94,8 @@ public class NetexStopPlace {
     }
     
     public String getAltName() {
+        if (altName == null)
+            return "";
         return altName;
     }
 
