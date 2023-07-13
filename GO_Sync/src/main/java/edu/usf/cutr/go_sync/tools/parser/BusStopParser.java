@@ -138,6 +138,11 @@ public class BusStopParser extends DefaultHandler{
         // Remove nodes that are part of a way
         for (int i = xmlNodeWays.size() - 1; i >= 0; i--) {
             if (indexOfNodesToRemove.contains(i)) {
+                // Don't remove node if it has a public_transport=platform tag
+                if (xmlTags.get(i).containsKey("public_transport") && xmlTags.get(i).get("public_transport").equals("platform")) {
+                    System.out.println("Not removing node " + i + " of lat: " + xmlNodeWays.get(i).getLat());
+                    continue;
+                }
                 NodeWayAttr n = xmlNodeWays.remove(i);
                 xmlTags.remove(i);
                 //System.out.println("Removing index: " + i + " - nodeId: " + n.getValue("id"));
