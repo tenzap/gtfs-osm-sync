@@ -265,7 +265,7 @@ public class GTFSReadIn {
                 }
             }
             if (routeLongNameKey != -1)
-                keysIndex.put("name",routeLongNameKey);
+                keysIndex.put("gtfs:name",routeLongNameKey);
 //                    System.out.println(stopIdKey+","+stopNameKey+","+stopLatKey+","+stopLonKey);
 
             {
