@@ -17,9 +17,9 @@ Copyright 2010 University of South Florida
 
 package edu.usf.cutr.go_sync.object;
 
-import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 
 /**
  *
@@ -28,12 +28,12 @@ import java.util.Iterator;
 
 public class Route extends OsmPrimitive implements Comparable{
     private String routeId, routeRef, operatorName;
-    private HashSet<RelationMember> osmMembers;
+    private LinkedHashSet<RelationMember> osmMembers;
     private final String route_id_key = "gtfs_route_id";
 
     public Route(String rId, String rRef, String op) {
         osmTags = new Hashtable();
-        osmMembers = new HashSet<RelationMember>();
+        osmMembers = new LinkedHashSet <RelationMember>();
         routeId = rId;
         if(rId!=null) this.osmTags.put(route_id_key, rId);
         routeRef = rRef;
@@ -43,7 +43,7 @@ public class Route extends OsmPrimitive implements Comparable{
     public Route(Route r) {
         this.osmTags = new Hashtable();
         if(r.osmTags!=null) this.osmTags.putAll(r.osmTags);
-        this.osmMembers = new HashSet<RelationMember>();
+        this.osmMembers = new LinkedHashSet <RelationMember>();
         if(r.getOsmMembers()!=null) this.osmMembers.addAll(r.getOsmMembers());
         this.routeId = r.getRouteId();
         String ori = (String)r.getTags().get(route_id_key);
@@ -63,7 +63,7 @@ public class Route extends OsmPrimitive implements Comparable{
         osmMembers.add(osmNodeId);
     }
 
-    public void addOsmMembers(HashSet<RelationMember> oMembers){
+    public void addOsmMembers(LinkedHashSet <RelationMember> oMembers){
         osmMembers.addAll(oMembers);
     }
 
@@ -84,7 +84,7 @@ public class Route extends OsmPrimitive implements Comparable{
         return null;
     }
 
-    public HashSet<RelationMember> getOsmMembers(){
+    public LinkedHashSet <RelationMember> getOsmMembers(){
         return osmMembers;
     }
 

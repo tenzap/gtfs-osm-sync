@@ -48,6 +48,7 @@ import edu.usf.cutr.go_sync.tools.OsmDistance;
 import edu.usf.cutr.go_sync.tools.OsmFormatter;
 import edu.usf.cutr.go_sync.tag_defs;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 
 /**
  *
@@ -80,7 +81,7 @@ public class CompareData extends OsmTask{
     private ArrayList<AttributesImpl> OSMRelations = new ArrayList<AttributesImpl>();
 //    private ArrayList<Hashtable<String, String>> OSMRelationTags = new ArrayList<Hashtable<String, String>>();
 private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
-    private ArrayList<HashSet<RelationMember>> OSMRelationMembers = new ArrayList<HashSet<RelationMember>>();
+    private ArrayList<LinkedHashSet <RelationMember>> OSMRelationMembers = new ArrayList<LinkedHashSet <RelationMember>>();
     // key is gtfs, value is container of potential osm matches, sorted by distance from gtfs stop
     private Hashtable<Stop, TreeSet<Stop>> report =
         new Hashtable<Stop, TreeSet<Stop>>();
@@ -565,7 +566,7 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
             //)
                     ) {
 //                System.out.println(routeId +"\t" + operator);
-                HashSet<RelationMember> em = OSMRelationMembers.get(osm);
+                LinkedHashSet <RelationMember> em = OSMRelationMembers.get(osm);
                 Route r;
                 String ostring,idstring,refstring;
 
