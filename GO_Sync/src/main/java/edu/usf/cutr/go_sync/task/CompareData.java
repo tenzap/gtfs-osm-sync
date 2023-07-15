@@ -479,7 +479,7 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
                         if(!routes.containsKey(rios.getRouteId())){
                             r = new Route(rios);
                             //add tag
-                            r.addTag("name", OperatorInfo.getAbbreviateName()+
+                            r.addTag("gtfs:name", OperatorInfo.getAbbreviateName()+
                                     " Route "+ r.getRouteRef()); //TODO use long route name instead of creating own
                             r.addTag(tag_defs.GTFS_OPERATOR_KEY,OperatorInfo.getFullName());
 //                            r.addTag("network",OperatorInfo.getFullName());
