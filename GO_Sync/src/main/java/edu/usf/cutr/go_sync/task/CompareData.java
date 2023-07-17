@@ -92,6 +92,9 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
     private Hashtable<String, Route> routes = new Hashtable<String, Route>();
     private Hashtable<String, Route> agencyRoutes = new Hashtable<String, Route>();
     private Hashtable<String, Route> existingRoutes = new Hashtable<String, Route>();
+    HashMap<String, ArrayList<RouteVariant>> allRouteVariantsByRoute;
+    HashMap<String, RouteVariant> allRouteVariants;
+    HashMap<String, String> gtfsTripIdToRouteVariantMap = new HashMap<>();
     private double minLat=0, minLon=0, maxLat=0, maxLon=0;
     private HttpRequest osmRequest;
     private HashSet<String> osmActiveUsers = new HashSet<String>();
@@ -1009,7 +1012,9 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
                 OperatorInfo.setFullName(aName);
             List<Stop> st = data.readBusStop(fileNameInStops, OperatorInfo.getFullName(), fileNameInRoutes, fileNameInTrips, fileNameInStopTimes);
 
-            HashMap<String, RouteVariant> allRouteVariants = data.readRouteVariants(fileNameInStopTimes, fileNameInTrips, fileNameInRoutes);
+            allRouteVariants = data.readRouteVariants(fileNameInStopTimes, fileNameInTrips, fileNameInRoutes);
+            gtfsTripIdToRouteVariantMap = data.getGtfsTripIdToRouteVariantMap();
+            allRouteVariantsByRoute = GTFSReadIn.getAllRouteVariantsByRoute(allRouteVariants);
             //for (HashMap.Entry<String, RouteVariant> rv : allRouteVariants.entrySet()) {
             //    String key = rv.getKey();
             //    RouteVariant value = rv.getValue();
