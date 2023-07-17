@@ -41,14 +41,14 @@ public class RouteVariant {
         this.stops = stops;
     }
 
-    public void addStop(Integer sequence_id, String stop_id, String pickup_type, String drop_off_type) {
-        RouteVariantStop rvs = new RouteVariantStop(stop_id, pickup_type, drop_off_type);
+    public void addStop(Integer sequence_id, String stop_id, String name, String pickup_type, String drop_off_type) {
+        RouteVariantStop rvs = new RouteVariantStop(stop_id, name, pickup_type, drop_off_type);
         stops.put(sequence_id, rvs);
     }
 
     public String toText() {
         String s = "";
-        s += String.format("Trip_id [%s] | route_id [%s] | route_short_name [%s]\n", trip_id, route_id, route_short_name);
+        s += String.format("Trip_id [%s] | route_id [%s] | route_short_name [%s] | route_long_name [%s]\n", trip_id, route_id, route_short_name, route_long_name);
         s += String.format(" Same as: %s\n", same_trip_sequences.toString());
         for (Map.Entry<Integer, RouteVariantStop> stop : stops.entrySet()) {
             Integer key = stop.getKey();
@@ -112,7 +112,7 @@ public class RouteVariant {
     public String getOsmValue(String key_name) {
         switch (key_name) {
             case "ref":
-                return this.route_id;
+                return this.route_short_name;
             case "name":
                 return String.format("Bus %s: %s => %s",
                         this.route_short_name,
@@ -127,6 +127,7 @@ public class RouteVariant {
             case "gtfs:trip_id:sample":
                 return this.trip_id;
             case "gtfs:name":
+            case "gtfs_name":
                 return this.route_long_name;
             default:
                 break;

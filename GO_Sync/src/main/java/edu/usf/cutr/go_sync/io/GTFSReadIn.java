@@ -37,9 +37,11 @@ public class GTFSReadIn {
     private static final String NTD_ID_KEY = "ntd_id";
 
     private List<Stop> stops;
+    private HashMap<String, Stop> stopsMap;
 
     public GTFSReadIn() {
         stops = new ArrayList<Stop>();
+        stopsMap = new HashMap<String, Stop>();
         allRoutes = new Hashtable<String, Route>();
 //        readBusStop("C:\\Users\\Khoa Tran\\Desktop\\Summer REU\\Khoa_transit\\stops.txt");
     }
@@ -202,6 +204,7 @@ public class GTFSReadIn {
                     if(asdf!=null)s.addRoutes(stopIDs.get(tempStopId));
 
                     stops.add(s);
+                    stopsMap.put(tempStopId,s);
 
                     HashMap<String,String> modes = getModeTagsByBusStop(stopIDs.get(tempStopId));
                     if (!r.isEmpty()) s.addTags(modes);
@@ -360,6 +363,8 @@ public class GTFSReadIn {
     }
 
     public HashMap<String, RouteVariant> readRouteVariants(String stop_times_fName, String trips_fName, String routes_fName) {
+        assert (!stopsMap.isEmpty()) : "no stops. Is this called after having read the stops.txt file?";
+
         HashMap<String, RouteVariant> allRouteVariants = new HashMap<String, RouteVariant>();
         String thisLine;
 
@@ -407,7 +412,7 @@ public class GTFSReadIn {
                 String pickup_type = csvRecord.get(keysIndex.get("pickup_type"));
                 String drop_off_type = csvRecord.get(keysIndex.get("drop_off_type"));
 
-                rv.addStop(sequence_id, stop_id, pickup_type, drop_off_type);
+                rv.addStop(sequence_id, stop_id, stopsMap.get(stop_id).getStopName(), pickup_type, drop_off_type);
             }
             // We finished reading the file, save the last trip we read.
             insertRouteVariantToAllRouteVariants(prev_trip_id, rv, allRouteVariants);
@@ -422,6 +427,7 @@ public class GTFSReadIn {
                 String route_id = tripIDs.get(current_rv.getTrip_id());
                 current_rv.setRoute_id(route_id);
                 current_rv.setRoute_short_name(routes.get(route_id).getRouteRef());
+                current_rv.setRoute_long_name(routes.get(route_id).getTag("gtfs:name"));
             }
 
         } catch (IOException e) {

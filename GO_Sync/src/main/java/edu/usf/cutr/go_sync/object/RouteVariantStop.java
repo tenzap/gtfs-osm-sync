@@ -14,9 +14,9 @@ public class RouteVariantStop {
 
     String stop_id, pickup_type, drop_off_type, name;
 
-    public RouteVariantStop(String stop_id, String pickup_type, String drop_off_type) {
+    public RouteVariantStop(String stop_id, String name, String pickup_type, String drop_off_type) {
         this.stop_id = stop_id;
-        this.name = stop_id;
+        this.name = name;
         this.pickup_type = pickup_type;
         this.drop_off_type = drop_off_type;
     }
@@ -34,16 +34,12 @@ public class RouteVariantStop {
     }
 
     public String toText() {
-        return String.format("stop: [%s], pickup_type[%s], drop_off_type[%s]",
-                stop_id, pickup_type, drop_off_type);
+        return String.format("stop: [%s], name [%s], pickup_type[%s], drop_off_type[%s]",
+                stop_id, name, pickup_type, drop_off_type);
     }
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Override
