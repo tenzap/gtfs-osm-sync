@@ -57,6 +57,7 @@ import edu.usf.cutr.go_sync.tools.parser.RouteParser;
 import edu.usf.cutr.go_sync.tools.parser.NodeWayAttr;
 import edu.usf.cutr.go_sync.tag_defs;
 import java.util.Arrays;
+import java.io.PrintWriter;
 /**
  *
  * @author Khoa Tran
@@ -204,6 +205,9 @@ public class HttpRequest {
         try {
             // get data from server
             String s = sendRequest(hosts, urlSuffix, "GET", "");
+            PrintWriter out = new PrintWriter("filename.txt");
+            out.println(s);
+            out.close();
             InputSource inputSource = new InputSource(new StringReader(s));
             // get data from file - need to remove this for REAL APPLICATION
 //            InputSource inputSource = new InputSource("DataFromServerRELATION.osm");

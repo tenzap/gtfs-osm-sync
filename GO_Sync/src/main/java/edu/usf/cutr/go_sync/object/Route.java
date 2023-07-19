@@ -48,8 +48,9 @@ public class Route extends OsmPrimitive implements Comparable{
         this.osmMembers = new LinkedHashSet <RelationMember>();
         if(r.getOsmMembers()!=null) this.osmMembers.addAll(r.getOsmMembers());
         this.routeId = r.getRouteId();
+        if (routeId == null) routeId = "missing";
         String ori = (String)r.getTags().get(tag_defs.OSM_ROUTE_ID_KEY);
-        if(ori==null) this.osmTags.put(tag_defs.OSM_ROUTE_ID_KEY, routeId);
+        if(ori==null && routeId != null) this.osmTags.put(tag_defs.OSM_ROUTE_ID_KEY, routeId);
         this.routeRef = r.getRouteRef();
         this.operatorName = r.getOperatorName();
         if(r.getOsmId()!=null) this.setOsmId(r.getOsmId());
@@ -103,16 +104,23 @@ public class Route extends OsmPrimitive implements Comparable{
     }
 
     public boolean compareOperatorName(Route o) {
-        if (o.getOperatorName()!=null && this.getOperatorName()!=null) {
+        return true; // Temporary hack.
+        /*if (o.getOperatorName()!=null && this.getOperatorName()!=null) {
             return OperatorInfo.isTheSameOperator(this.getOperatorName())
                     && OperatorInfo.isTheSameOperator(o.getOperatorName());
         }
-        return false;
+        return false;*/
     }
 
     public int compareTo(Object o){
         Route r = (Route) o;
-        if(this.compareOperatorName(r) && r.getRouteId().equals(this.getRouteId())) {
+        if (this.getRouteId().equals("missing") || r.getRouteId().equals("missing")) {
+            // Compare osmid
+            if (this.getOsmId().equals(r.getOsmId()))
+                return 0;
+        }
+            
+        if(!this.getRouteId().equals("missing") && !r.getRouteId().equals("missing") &&  this.compareOperatorName(r) && r.getRouteId().equals(this.getRouteId())) {
             return 0;
         }
         return 1;
@@ -131,11 +139,14 @@ public class Route extends OsmPrimitive implements Comparable{
     @Override
     public int hashCode(){
         String id = this.getRouteId();
-        return id.hashCode();
+        String osmId = this.getTag("id");
+        return (id + '|' + osmId).hashCode();
     }
 
     @Override
     public String toString(){
+        if (routeId.equals("missing") && !getOsmId().isEmpty())
+            return "missing (" + getOsmId() + ")";
         return this.getRouteId();
     }
 }
