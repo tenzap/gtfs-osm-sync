@@ -14,7 +14,7 @@ import java.util.TreeMap;
  *
  * @author tenzap
  */
-public class RouteVariant {
+public class RouteVariant extends OsmPrimitive {
 
     String trip_id;
     String route_id;
@@ -141,6 +141,10 @@ public class RouteVariant {
 
     public void setRoute_long_name(String route_long_name) {
         this.route_long_name = route_long_name;
+    }
+    
+    public String getVariantIdForDisplay() {
+        return route_short_name + "|" + trip_id;
     }
 
 }
