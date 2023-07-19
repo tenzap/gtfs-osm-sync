@@ -699,7 +699,7 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
                     Stop gtfsStop = GTFSstops.get(gtfsindex);
                     double distance = OsmDistance.distVincenty(node.getLat(), node.getLon(),
                             gtfsStop.getLat(), gtfsStop.getLon());
-                    if ((distance<RANGE) && !(noUpload.contains(gtfsStop)) ){//&& (!matched.contains(gtfsStop))){
+                    if (!(noUpload.contains(gtfsStop)) ){//&& (!matched.contains(gtfsStop))){
                         // if has same stop_id
                         if ((osmStopID!= null) && (!osmStopID.equals("missing")) && (osmStopID.equals(gtfsStop.getStopID()))){
                             noUpload.add(gtfsStop);
@@ -782,6 +782,7 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
                         }
                         // stop_id == null OR OSMnode does NOT have same stop id
                         else {
+                          if (distance<RANGE) {
                             if (distance>ERROR_TO_ZERO) {
                                 Stop ns = new Stop(gtfsStop);
                                 ns.addTag("FIXME", "This bus stop could be redundant");
@@ -878,6 +879,7 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
                                   // TODO
                               }
                             }
+                          }
                         }
                     }
                 }

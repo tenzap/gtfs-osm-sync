@@ -184,10 +184,11 @@ public class OsmPrimitive {
     public void setWayNdRefs(ArrayList<String> v) {
         //System.out.println("setWayNdRefs: size " + v.size());
         //System.out.println(v.toString());
-        if (v != null) {
+        /*if (v != null) {
             wayNdRefs.clear();
             wayNdRefs.addAll(v);
-        }
+        }*/
+        wayNdRefs = v;
     }
 
     public ArrayList<String> getWayNdRefs() {
