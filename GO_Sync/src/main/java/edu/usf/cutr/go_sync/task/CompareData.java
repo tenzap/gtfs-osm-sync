@@ -618,7 +618,7 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
             r.addTag("gtfs:name", rv.getOsmValue("gtfs:name"));
             r.addTag("gtfs:trip_id:sample", rv.getOsmValue("gtfs:trip_id:sample"));
             r.addTag("gtfs:route_id", rv.getOsmValue("gtfs:route_id"));
-            r.addTag(tag_defs.GTFS_OPERATOR_KEY, OperatorInfo.getFullName());
+            r.addTag(tag_defs.OSM_NETWORK_KEY, OperatorInfo.getFullName());
             r.addTag("ref", rv.getOsmValue("ref"));
             r.addTag("name", rv.getOsmValue("name"));
             r.addTag("from", rv.getOsmValue("from"));
@@ -1067,7 +1067,7 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
             }
             Hashtable<String,String> osmtag = new Hashtable<String,String>();
             osmtag.putAll(OSMTags.get(osmindex));
-            String osmOperator = (String)osmtag.get(tag_defs.GTFS_OPERATOR_KEY);
+            String osmOperator = (String)osmtag.get(tag_defs.OSM_NETWORK_KEY);
             String osmStopID = (String)osmtag.get("gtfs_id");
             String osmPlatformType = (String)osmtag.get(tag_defs.OSM_STOP_TYPE_KEY);
             //add leading 0's
@@ -1227,7 +1227,7 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
                                         es.addTag("FIXME", "This bus stop could be redundant");
                                         if (osmOperator==null || osmOperator.equals("missing")) {
                                             es.addTag("note", "Please add gtfs_id and operator after removing FIXME");
-                                            if (osmOperator==null) es.addTag(tag_defs.GTFS_OPERATOR_KEY,"missing");
+                                            if (osmOperator==null) es.addTag(tag_defs.OSM_NETWORK_KEY,"missing");
 //                                            if (osmOperator==null) es.addTag("network","missing");
                                         }
                                         else {

@@ -319,7 +319,7 @@ public class HttpRequest {
             String[] osmStopAltNames = ((String)tags.get("alt_name")).split(";");
             List<String> osmStopAltNamesList = new ArrayList<>(Arrays.asList(osmStopAltNames));
 
-            st = new Stop("node", null,(String)tags.get(tag_defs.GTFS_OPERATOR_KEY),(String)tags.get("name"),
+            st = new Stop("node", null,(String)tags.get(tag_defs.OSM_NETWORK_KEY),(String)tags.get("name"),
                     attImplNode.getValue("lat"),attImplNode.getValue("lon"), null, osmStopAltNamesList);
             st.addTags(tags);
             if (!isNew) {
