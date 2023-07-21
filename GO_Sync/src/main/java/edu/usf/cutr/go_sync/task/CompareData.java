@@ -601,10 +601,13 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
         
         // Map: gtfs_stop_id -> osm id
         HashMap<String,String> osmStopIdByGtfsStopId = new HashMap<>();
+        // Map: gtfs_stop_id -> osm type (ie. node or way)
+        HashMap<String,String> osmStopTypeByGtfsStopId = new HashMap<>();
         for (int i=0; i<OSMNodes.size(); i++) {
             Object gtfs_id = OSMTags.get(i).get("gtfs_id");
             if (gtfs_id != null) {
                 osmStopIdByGtfsStopId.put(gtfs_id.toString(), OSMNodes.get(i).getValue("id"));
+                osmStopTypeByGtfsStopId.put(gtfs_id.toString(), OSMNodes.get(i).geOsmPrimitiveType());
             }
         }
         
@@ -652,7 +655,7 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
                             
                 RelationMember rm = new RelationMember(
                         OsmNodeId,
-                        "node",
+                        osmStopTypeByGtfsStopId.get(gtfsStopId),
                         role);
                 rm.setStatus("GTFS dataset");
                 rm.setGtfsId(gtfsStopId);
