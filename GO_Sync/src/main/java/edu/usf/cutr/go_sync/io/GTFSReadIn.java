@@ -631,12 +631,20 @@ public class GTFSReadIn {
             if (netexSites == null) {
                 return null;
             } else {
+                if (netexSites.get(gtfsId) == null) {
+                    System.out.println("No netexSite for " + gtfsId);
+                    return null;
+                }
                 return netexSites.get(gtfsId).getName();
             }
         } else {
             if (netexQuays == null) {
                 return null;
             } else {
+                if (netexQuays.get(gtfsId) == null) {
+                    System.out.println("No netexQuay for " + gtfsId);
+                    return null;
+                }
                 return netexQuays.get(gtfsId).getName();
             }
         }
@@ -648,6 +656,11 @@ public class GTFSReadIn {
             if (netexSites == null) {
                 return null;
             } else {
+                if (netexSites.get(gtfsId) == null) {
+                    System.out.println("No netexSite for " + gtfsId);
+                    return null;
+                }
+
                 List<String> altNames = new ArrayList<String>();
                 altNames.add(netexSites.get(gtfsId).getAltName());
                 return altNames;
@@ -656,6 +669,10 @@ public class GTFSReadIn {
             if (netexQuays == null) {
                 return null;
             } else {
+                if (netexQuays.get(gtfsId) == null) {
+                    System.out.println("No netexQuay for " + gtfsId);
+                    return null;
+                }
                 return netexQuays.get(gtfsId).getAltNames();
             }
         }
