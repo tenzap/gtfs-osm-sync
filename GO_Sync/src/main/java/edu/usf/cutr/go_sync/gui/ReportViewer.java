@@ -1241,23 +1241,28 @@ public class ReportViewer extends javax.swing.JFrame implements TableModelListen
         indexInNewMember = newMembers.size();
         if (!osmMembers.containsAll(newMembers)) {
             for (RelationMember m : osmMembers) {
+                boolean addToSkippedMembersIndex = false;
                 if (strategy.contains(MemberProcessingOptions.SKIP_NODES_WITH_ROLE_EMPTY)) {
                     if (m.getType().equals("node") && m.getRole().isEmpty()) {
-                        skippedMembersIndex.add(indexInNewMember);
+                        addToSkippedMembersIndex = true;
                     }
                 }
                 if (strategy.contains(MemberProcessingOptions.SKIP_NODES_WITH_ROLE_STOP)) {
                     if (m.getType().equals("node") && m.getRole().isEmpty()) {
-                        skippedMembersIndex.add(indexInNewMember);
+                        addToSkippedMembersIndex = true;
                     }
                 }
                 if (strategy.contains(MemberProcessingOptions.REMOVE_PLATFORMS_NOT_IN_GTFS_TRIP_FROM_OSM_RELATION)) {
                     if (m.getRole().equals("platform") || m.getRole().equals("platform_exit_only") || m.getRole().equals("platform_entry_only")) {
-                        skippedMembersIndex.add(indexInNewMember);
+                        addToSkippedMembersIndex = true;
                     }
                 }
-                newMembers.add(m);
-                indexInNewMember++;
+                if (newMembers.add(m)) {
+                    if (addToSkippedMembersIndex) {
+                        skippedMembersIndex.add(indexInNewMember);
+                    }
+                    indexInNewMember++;
+                }
             }
         }
 
