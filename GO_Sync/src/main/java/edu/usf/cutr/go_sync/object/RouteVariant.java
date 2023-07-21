@@ -22,10 +22,9 @@ public class RouteVariant {
 
     String trip_id;
     String route_id;
-    String route_short_name;
-    private String route_long_name;
     List<String> same_trip_sequences;
     TreeMap<Integer, RouteVariantStop> stops;
+    Route gtfs_route;
 
     public RouteVariant(String trip_id) {
         this.trip_id = trip_id;
@@ -52,7 +51,7 @@ public class RouteVariant {
 
     public String toText() {
         String s = "";
-        s += String.format("Trip_id [%s] | route_id [%s] | route_short_name [%s] | route_long_name [%s]\n", trip_id, route_id, route_short_name, route_long_name);
+        s += String.format("Trip_id [%s] | route_id [%s] | route_short_name [%s] | route_long_name [%s]\n", trip_id, route_id, getRoute_short_name(), getRoute_long_name());
         s += String.format(" Same as: %s\n", same_trip_sequences.toString());
         for (Map.Entry<Integer, RouteVariantStop> stop : stops.entrySet()) {
             Integer key = stop.getKey();
@@ -79,11 +78,15 @@ public class RouteVariant {
     }
 
     public String getRoute_short_name() {
-        return route_short_name;
+        return gtfs_route.getRouteRef();
     }
 
-    public void setRoute_short_name(String route_short_name) {
-        this.route_short_name = route_short_name;
+    public Route getRoute() {
+        return gtfs_route;
+    }
+
+    public void setRoute(Route route) {
+        this.gtfs_route = route;
     }
 
     @Override
@@ -116,10 +119,10 @@ public class RouteVariant {
     public String getOsmValue(String key_name) {
         switch (key_name) {
             case "ref":
-                return this.route_short_name;
+                return getRoute_short_name();
             case "name":
                 return String.format("Bus %s: %s => %s",
-                        this.route_short_name,
+                        getRoute_short_name(),
                         stops.firstEntry().getValue().getName(),
                         stops.lastEntry().getValue().getName());
             case "from":
@@ -132,23 +135,18 @@ public class RouteVariant {
                 return this.trip_id;
             case "gtfs:name":
             case "gtfs_name":
-                return this.route_long_name;
+                return getRoute_long_name();
             default:
-                break;
+                return gtfs_route.getTag(key_name);
         }
-        return "";
     }
 
     public String getRoute_long_name() {
-        return route_long_name;
+        return gtfs_route.getTag("gtfs:name");
     }
 
-    public void setRoute_long_name(String route_long_name) {
-        this.route_long_name = route_long_name;
-    }
-    
     public String getVariantIdForDisplay() {
-        return route_short_name + "|" + trip_id;
+        return getRoute_short_name() + "|" + trip_id;
     }
 
     private Duration getDurationAsDuration() {

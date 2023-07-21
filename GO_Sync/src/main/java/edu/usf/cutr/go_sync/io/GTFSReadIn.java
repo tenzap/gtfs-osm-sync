@@ -451,8 +451,7 @@ public class GTFSReadIn {
                 RouteVariant current_rv = rv_entry.getValue();
                 String route_id = tripIDs.get(current_rv.getTrip_id());
                 current_rv.setRoute_id(route_id);
-                current_rv.setRoute_short_name(routes.get(route_id).getRouteRef());
-                current_rv.setRoute_long_name(routes.get(route_id).getTag("gtfs:name"));
+                current_rv.setRoute(routes.get(route_id));
             }
 
         } catch (IOException e) {
