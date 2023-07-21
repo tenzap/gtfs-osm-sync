@@ -4,7 +4,11 @@
  */
 package edu.usf.cutr.go_sync.object;
 
+import java.time.Duration;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -41,8 +45,8 @@ public class RouteVariant {
         this.stops = stops;
     }
 
-    public void addStop(Integer sequence_id, String stop_id, String name, String pickup_type, String drop_off_type) {
-        RouteVariantStop rvs = new RouteVariantStop(stop_id, name, pickup_type, drop_off_type);
+    public void addStop(Integer sequence_id, String stop_id, String name, String arrival_time, String departure_time, String pickup_type, String drop_off_type) {
+        RouteVariantStop rvs = new RouteVariantStop(stop_id, name, arrival_time, departure_time, pickup_type, drop_off_type);
         stops.put(sequence_id, rvs);
     }
 
@@ -147,4 +151,19 @@ public class RouteVariant {
         return route_short_name + "|" + trip_id;
     }
 
+    private Duration getDurationAsDuration() {
+        Integer firstStopIndex = Collections.min(stops.keySet());
+        String tripDepartureTime = stops.get(firstStopIndex).getDeparture_time();
+        Integer lastStopIndex = Collections.max(stops.keySet());
+        String tripArrivalTime = stops.get(lastStopIndex).getArrival_time();
+
+        LocalTime tripDepartureTimeLT = LocalTime.parse(tripDepartureTime, DateTimeFormatter.ofPattern("HH:mm:ss"));
+        LocalTime tripArrivalTimeLT = LocalTime.parse(tripArrivalTime, DateTimeFormatter.ofPattern("HH:mm:ss"));
+        return Duration.between(tripDepartureTimeLT, tripArrivalTimeLT);
+    }
+
+    public String getDuration() {
+        Duration d = getDurationAsDuration();
+        return String.format("%02d:%02d", d.toHours(), d.minusHours(d.toHours()).toMinutes());
+    }
 }

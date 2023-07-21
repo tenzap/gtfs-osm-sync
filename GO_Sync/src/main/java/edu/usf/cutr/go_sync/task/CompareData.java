@@ -624,6 +624,7 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
             r.addTag("from", rv.getOsmValue("from"));
             r.addTag("to", rv.getOsmValue("to"));
             r.addTag("public_transport:version", "2");
+            r.addTag("duration", rv.getDuration());
 
             //add member
             //Route rt = (Route)routes.get(routeArray[j]);
