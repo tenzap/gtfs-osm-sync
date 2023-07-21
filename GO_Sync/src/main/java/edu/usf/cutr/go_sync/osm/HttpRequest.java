@@ -169,7 +169,9 @@ public class HttpRequest {
             // get data from server
             //String s = sendRequest(hosts, urlSuffix, "GET", "");
         	String s = sendRequest(hosts, "", "POST", content);
-
+            PrintWriter out = new PrintWriter("osm_stops.xml");
+            out.println(s);
+            out.close();
             InputSource inputSource = new InputSource(new StringReader(s));
             // get data from file - need to remove this for REAL APPLICATION
 //            InputSource inputSource = new InputSource("DataFromServer.osm");
@@ -205,7 +207,7 @@ public class HttpRequest {
         try {
             // get data from server
             String s = sendRequest(hosts, urlSuffix, "GET", "");
-            PrintWriter out = new PrintWriter("filename.txt");
+            PrintWriter out = new PrintWriter("osm_relations.xml");
             out.println(s);
             out.close();
             InputSource inputSource = new InputSource(new StringReader(s));

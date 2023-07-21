@@ -375,7 +375,7 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
                 // These have no match per tripId, RouteId or RouteShortName. Skip for now
             }
             
-            if (tree.containsKey(score)) {
+            while (tree.containsKey(score)) {
                 score--;
             }
             System.out.println(String.format("Adding %s with score %d",osmRoute.getOsmId(), score));
@@ -614,6 +614,7 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
             Route r = new Route(rv.getOsmValue("gtfs:trip_id:sample"), rv.getOsmValue("ref"), OperatorInfo.getFullName());
             //add tag
             r.addTag("type", "route");
+            r.addTag("route", "bus");
             r.addTag("gtfs:name", rv.getOsmValue("gtfs:name"));
             r.addTag("gtfs:trip_id:sample", rv.getOsmValue("gtfs:trip_id:sample"));
             r.addTag("gtfs:route_id", rv.getOsmValue("gtfs:route_id"));
@@ -637,10 +638,21 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
                 } else {
                     
                 }
+                String role;
+                if (!rvstop.getValue().getDrop_off_type().equals("1") && 
+                        rvstop.getValue().getPickup_type().equals("1")) {
+                    role = "platform_exit_only";
+                } else if (rvstop.getValue().getDrop_off_type().equals("1") &&
+                        !rvstop.getValue().getPickup_type().equals("1")) {
+                    role = "platform_entry_only";
+                } else {
+                    role = "platform";
+                }
+                            
                 RelationMember rm = new RelationMember(
                         OsmNodeId,
                         "node",
-                        "platform");
+                        role);
                 rm.setStatus("GTFS dataset");
                 rm.setGtfsId(gtfsStopId);
                 r.addOsmMember(rm);
@@ -785,7 +797,6 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
 //                System.out.println(routeId +"\t" + operator);
 
                 // Match de route, reste a tester le match de trip
-                LinkedHashSet <RelationMember> em = OSMRelationMembers.get(osm);
                 Route r;
                 String ostring,idstring,refstring;
 
@@ -797,14 +808,13 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
                 Route er;
                 er = new Route(tripId, routeShortName, ostring);
                     
-                ArrayList<RelationMember> tempem = new ArrayList<RelationMember>();
+                LinkedHashSet<RelationMember> em = OSMRelationMembers.get(osm);
+                LinkedHashSet<RelationMember> tempem = new LinkedHashSet<RelationMember>();
                 tempem.addAll(em);
-                for(int i=0; i<em.size(); i++) {
+                for (RelationMember m : tempem) {
                     if(this.flagIsDone) return;
-                    RelationMember m = tempem.get(i);
                     m.setGtfsId((String)osmIdToGtfsId.get(m.getRef()));
                     er.addOsmMember(m);
-
                 }
                 
                 er.addTags(osmtag);
@@ -816,35 +826,34 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
                 for (String matchingTrip : matchingTrips) {
                     r = new Route(routes.get(gtfsTripIdToRouteVariantMap.get(matchingTrip)));
 
-                    for (int i = 0; i < em.size(); i++) {
+                    for (RelationMember m : tempem) {
                         if (this.flagIsDone) {
                             return;
                         }
-                        RelationMember m = tempem.get(i);
                         m.setGtfsId((String) osmIdToGtfsId.get(m.getRef()));
 
                         RelationMember matchMember = r.getOsmMember(m.getRef());
                         if (matchMember != null) {
                             matchMember.setStatus("both GTFS dataset and OSM server");
                         } else {
-                            r.addOsmMember(new RelationMember(m));
+                            //r.addOsmMember(new RelationMember(m));
                         }
                     }
                     Hashtable diff = compareOsmTags(osmtag, r);
                     if (!em.containsAll(r.getOsmMembers()) || diff.size() != 0) {
                         r.setStatus("m");
-                        r.setOsmVersion(osmRelation.getValue("version"));
-                        r.setOsmId(osmRelation.getValue("id"));
-                        r.addOsmMembers(em);
+                        //r.setOsmVersion(osmRelation.getValue("version"));
+                        //r.setOsmId(osmRelation.getValue("id"));
+                        //r.addOsmMembers(em);
                         r.addTags(osmtag);
                     } else {
                         r.setStatus("e");
                     }
 
                     // Put the new
-                    routes.remove(r.getTag("gtfs:trip_id:sample"));
-                    routes.put(r.getTag("gtfs:trip_id:sample"), r);
-                    existingRoutes.put(r.getTag("gtfs:trip_id:sample"), er);
+                    routes.remove(r.getRouteId());
+                    routes.put(r.getRouteId(), r);
+                    existingRoutes.put(r.getRouteId(), er);
                     addToReportRoute(r, er, osm, false);
                 }
                                 
@@ -880,13 +889,12 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
             
             Route er = new Route(osmTripId, osmRouteRef, ostring);
             
-                ArrayList<RelationMember> tempem = new ArrayList<RelationMember>();
+                LinkedHashSet<RelationMember> tempem = new LinkedHashSet<RelationMember>();
                 LinkedHashSet <RelationMember> em = OSMRelationMembers.get(osmRouteIndex);
                 
                 tempem.addAll(em);
                 
-                for(int i=0; i<em.size(); i++) {
-                    RelationMember m = tempem.get(i);
+                for (RelationMember m : tempem) {
                     m.setGtfsId((String)osmIdToGtfsId.get(m.getRef()));
                     er.addOsmMember(m);
 
@@ -918,7 +926,7 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
         
         return osmRouteMatches;
     }
-    
+    /*
     public String getBestGtfsRouteVariantForOsmRoute(int osmIndex) {
         buildGtfsTripIdByOsmIndex();
         ArrayList<String> matchingTrips = gtfsTripIdByOsmIndex.get(osmIndex);
@@ -928,6 +936,7 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
                 
         return existingRouteVariantTripId;
     }
+    */
         /*
         Integer osmRelationIndex = (Integer)rvScoreMap.get(tripId).lastEntry().getValue();
         String bestMatchOsmId = OSMRelations.get(osmRelationIndex).getValue("id");
