@@ -12,17 +12,27 @@ import java.util.Objects;
  */
 public class RouteVariantStop {
 
-    String stop_id, pickup_type, drop_off_type, name;
+    String stop_id, pickup_type, drop_off_type, name, arrival_time, departure_time;
 
-    public RouteVariantStop(String stop_id, String name, String pickup_type, String drop_off_type) {
+    public RouteVariantStop(String stop_id, String name, String arrival_time, String departure_time, String pickup_type, String drop_off_type) {
         this.stop_id = stop_id;
         this.name = name;
+        this.arrival_time = arrival_time;
+        this.departure_time = departure_time;
         this.pickup_type = pickup_type;
         this.drop_off_type = drop_off_type;
     }
 
     public String getStop_id() {
         return stop_id;
+    }
+
+    public String getArrival_time() {
+        return arrival_time;
+    }
+
+    public String getDeparture_time() {
+        return departure_time;
     }
 
     public String getPickup_type() {
