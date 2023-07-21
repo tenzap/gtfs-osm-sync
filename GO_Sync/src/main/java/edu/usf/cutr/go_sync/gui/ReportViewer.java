@@ -99,6 +99,7 @@ public class ReportViewer extends javax.swing.JFrame implements TableModelListen
         SKIP_NODES_WITH_ROLE_EMPTY,
         SKIP_NODES_WITH_ROLE_STOP,
         MOVE_NODES_BEFORE_WAYS,
+        DONT_REPLACE_EXISING_OSM_COLOR,
         REMOVE_PLATFORMS_NOT_IN_GTFS_TRIP_FROM_OSM_RELATION;
     }
 
