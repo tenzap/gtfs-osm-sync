@@ -347,6 +347,12 @@ public class GTFSReadIn {
                                 if (k.equals(tag_defs.OSM_COLOUR_KEY) && ((v.length() == 3 || v.length() == 6) && colourPattern.matcher(v).matches()))/*^[a-fA-F0-9]+$")))*/ {
                                     v = "#".concat(v);
                                 }
+                                if (k.equals("gtfs_route_text_color") ||
+                                        k.equals("gtfs_agency_id")) {
+                                    // Don't add "gtfs_route_text_color" to the Route
+                                    // Don't add "gtfs_agency_id" to the Route
+                                    continue;
+                                }
                                 r.addTag(k, v.replace("  ", " ").trim());
                             }
                         }
