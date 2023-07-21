@@ -58,7 +58,7 @@ public class Stop extends OsmPrimitive implements Comparable{
 
         // Add alt_names
         List<String> altNames = netexQuayAltNames;
-        if (netexQuayName != null && !stopName.equals(netexQuayName) && !netexQuayAltNames.contains(stopName)) {
+        if (netexQuayName != null && !stopName.equals(netexQuayName) && netexQuayAltNames!=null && !netexQuayAltNames.contains(stopName)) {
             altNames.add(stopName.replace(";", "_"));
         }
         if (altNames != null && !altNames.isEmpty()) {

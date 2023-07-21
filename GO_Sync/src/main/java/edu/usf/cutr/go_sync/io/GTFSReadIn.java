@@ -53,17 +53,6 @@ public class GTFSReadIn {
         stopsMap = new HashMap<String, Stop>();
         allRoutes = new Hashtable<String, Route>();
 //        readBusStop("C:\\Users\\Khoa Tran\\Desktop\\Summer REU\\Khoa_transit\\stops.txt");
-        try {
-            String pathToNetex = "/mnt/packages/downloads/fluo-grand-est-fluo68-netex/Arrets.xml";
-            File nextFile = new File(pathToNetex);
-            NetexParser netexParser = new NetexParser();
-            SAXParserFactory.newInstance().newSAXParser().parse(nextFile, netexParser);
-            netexQuays = netexParser.getQuayList();
-            netexSites = netexParser.getLogicalSiteList();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
     }
     public static Set<String> getAllRoutesID(){
         return allRoutes.keySet();
@@ -92,10 +81,14 @@ public class GTFSReadIn {
         return null;
     }
 
-    public List<Stop> readBusStop(String fName, String agencyName, String routes_fName, String trips_fName, String stop_times_fName){
+    public List<Stop> readBusStop(String fName, String agencyName, String routes_fName, String trips_fName, String stop_times_fName, String netexStopsFilename){
         long tStart = System.currentTimeMillis();
         Hashtable<String, HashSet<Route>> id = matchRouteToStop(routes_fName, trips_fName, stop_times_fName);
         Hashtable<String, HashSet<Route>> stopIDs = new Hashtable<String, HashSet<Route>>(id);
+
+        if (netexStopsFilename != null && !netexStopsFilename.isEmpty()) {
+            readNetexStopsFile(netexStopsFilename);
+        }
 
         String thisLine;
         String [] elements;
@@ -630,20 +623,48 @@ public class GTFSReadIn {
     public String getNetexQuayName(String gtfsId) {
         //System.out.println("getName for " + gtfsId);
         if (gtfsId.startsWith("S")) {
-            return netexSites.get(gtfsId).getName();
+            if (netexSites == null) {
+                return null;
+            } else {
+                return netexSites.get(gtfsId).getName();
+            }
         } else {
-            return netexQuays.get(gtfsId).getName();
+            if (netexQuays == null) {
+                return null;
+            } else {
+                return netexQuays.get(gtfsId).getName();
+            }
         }
     }
 
     public List<String> getNetexQuayAltNames(String gtfsId) {
         //System.out.println("getAlt Name for " + gtfsId);
         if (gtfsId.startsWith("S")) {
-            List<String> altNames = new ArrayList<String>();
-            altNames.add(netexSites.get(gtfsId).getAltName());
-            return altNames;
+            if (netexSites == null) {
+                return null;
+            } else {
+                List<String> altNames = new ArrayList<String>();
+                altNames.add(netexSites.get(gtfsId).getAltName());
+                return altNames;
+            }
         } else {
-            return netexQuays.get(gtfsId).getAltNames();
+            if (netexQuays == null) {
+                return null;
+            } else {
+                return netexQuays.get(gtfsId).getAltNames();
+            }
+        }
+    }
+
+    private void readNetexStopsFile(String netexFilePath) {
+        try {
+            File nextFile = new File(netexFilePath);
+            NetexParser netexParser = new NetexParser();
+            SAXParserFactory.newInstance().newSAXParser().parse(nextFile, netexParser);
+            netexQuays = netexParser.getQuayList();
+            netexSites = netexParser.getLogicalSiteList();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
