@@ -1370,7 +1370,8 @@ public class ReportViewer extends javax.swing.JFrame implements TableModelListen
             clearRouteTable();
         }
         
-        if (finalRoutesAccepted.containsKey(((Route)gtfsRoutesComboBox.getSelectedItem()).getRouteId())) {
+        Route selectedGtfsRoute = (Route)gtfsRoutesComboBox.getSelectedItem();
+        if (selectedGtfsRoute != null && finalRoutesAccepted.containsKey(selectedGtfsRoute.getRouteId())) {
             saveChangeRouteButton.setText("Accept & Save Change");
         } else {
             saveChangeRouteButton.setText("Accept");
