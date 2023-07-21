@@ -292,6 +292,8 @@ public class MainForm extends javax.swing.JFrame implements PropertyChangeListen
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         operatorPanel.add(operatorRegexLabel, gridBagConstraints);
+
+        operatorRegexField.setText(".*");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 2;
@@ -440,6 +442,8 @@ public class MainForm extends javax.swing.JFrame implements PropertyChangeListen
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         netexPanel.add(netexZipFileLabel, gridBagConstraints);
+
+        netexZipFile.setText("/mnt/packages/downloads/fluo-grand-est-fluo68-netex-2023-07.zip");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
@@ -461,6 +465,8 @@ public class MainForm extends javax.swing.JFrame implements PropertyChangeListen
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         netexPanel.add(netexStopFilenameLabel, gridBagConstraints);
+
+        netexStopFilename.setText("Arrets.xml");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
