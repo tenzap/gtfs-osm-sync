@@ -617,7 +617,7 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
             Route r = new Route(rv.getOsmValue("gtfs:trip_id:sample"), rv.getOsmValue("ref"), OperatorInfo.getFullName());
             //add tag
             r.addTag("type", "route");
-            r.addTag("route", "bus");
+            r.addTag("route", rv.getOsmValue("route"));
             r.addTag("gtfs:name", rv.getOsmValue("gtfs:name"));
             r.addTag("gtfs:trip_id:sample", rv.getOsmValue("gtfs:trip_id:sample"));
             r.addTag("gtfs:route_id", rv.getOsmValue("gtfs:route_id"));
@@ -628,6 +628,7 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
             r.addTag("to", rv.getOsmValue("to"));
             r.addTag("public_transport:version", "2");
             r.addTag("duration", rv.getDuration());
+            r.addTag(tag_defs.OSM_COLOUR_KEY, rv.getOsmValue(tag_defs.OSM_COLOUR_KEY));
 
             //add member
             //Route rt = (Route)routes.get(routeArray[j]);
