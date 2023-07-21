@@ -342,7 +342,7 @@ public class GTFSReadIn {
                                     // Don't add "gtfs_agency_id" to the Route
                                     continue;
                                 }
-                                r.addTag(k, v);
+                                r.addTag(k, v.replace("  ", " ").trim());
                             }
                         }
                     } catch(Exception e){
