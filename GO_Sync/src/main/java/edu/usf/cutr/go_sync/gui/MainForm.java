@@ -190,6 +190,8 @@ public class MainForm extends javax.swing.JFrame implements PropertyChangeListen
         skipNodesWithRoleStopCb = new javax.swing.JCheckBox();
         moveNodesBeforeWaysCb = new javax.swing.JCheckBox();
         removePlatformsNotInGtfsFromOSMRelationCb = new javax.swing.JCheckBox();
+        dontAddGtfsRouteTextColorCb = new javax.swing.JCheckBox();
+        dontAddGtfsAgencyIdCb = new javax.swing.JCheckBox();
         gtfsDataPanel = new javax.swing.JPanel();
         rbURL = new javax.swing.JRadioButton();
         rbFileFolder = new javax.swing.JRadioButton();
@@ -368,6 +370,12 @@ public class MainForm extends javax.swing.JFrame implements PropertyChangeListen
 
         removePlatformsNotInGtfsFromOSMRelationCb.setText("Remove platforms not in Gtfs from OSM route");
         routeOptionsPanel.add(removePlatformsNotInGtfsFromOSMRelationCb);
+
+        dontAddGtfsRouteTextColorCb.setText("Don't add Gtfs 'route_text_color' to OSM");
+        routeOptionsPanel.add(dontAddGtfsRouteTextColorCb);
+
+        dontAddGtfsAgencyIdCb.setText("Don't add Gtfs 'agency_id' to OSM");
+        routeOptionsPanel.add(dontAddGtfsAgencyIdCb);
 
         optionsPanel.add(routeOptionsPanel, new java.awt.GridBagConstraints());
 
@@ -569,7 +577,7 @@ public class MainForm extends javax.swing.JFrame implements PropertyChangeListen
                 .addGroup(revertChangesetPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(revertChangesetField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(changesetLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 281, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 323, Short.MAX_VALUE)
                 .addComponent(revertButton)
                 .addContainerGap())
         );
@@ -694,6 +702,12 @@ public class MainForm extends javax.swing.JFrame implements PropertyChangeListen
         }
         if (skipNodesWithRoleStopCb.isEnabled()) {
             processingOptions.add(ProcessingOptions.SKIP_NODES_WITH_ROLE_STOP);
+        }
+        if (dontAddGtfsRouteTextColorCb.isEnabled()) {
+            processingOptions.add(ProcessingOptions.DONT_ADD_GTFS_ROUTE_TEXT_COLOR_TO_ROUTE);
+        }
+        if (dontAddGtfsAgencyIdCb.isEnabled()) {
+            processingOptions.add(ProcessingOptions.DONT_ADD_GTFS_AGENCY_ID_TO_ROUTE);
         }
 
         //can't leave blank
@@ -934,6 +948,8 @@ public class MainForm extends javax.swing.JFrame implements PropertyChangeListen
     private javax.swing.JPanel compareDataPanel;
     private javax.swing.JSpinner distanceThreshold;
     private javax.swing.JPanel distanceThresholdPanel;
+    private javax.swing.JCheckBox dontAddGtfsAgencyIdCb;
+    private javax.swing.JCheckBox dontAddGtfsRouteTextColorCb;
     private javax.swing.JCheckBox dontReplaceExistingOSMRouteColorCb;
     private javax.swing.JButton exitButton;
     private javax.swing.JTextField fileDirTextField;
