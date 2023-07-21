@@ -77,7 +77,7 @@ public class OsmPrinter {
         if (!changeSetID.equals("DUMMY"))
             changesetText = "changeset='" + changeSetID+ "'";
         return "<node " + changesetText +  " lat='" + lat + "' lon='" + lon + "'>\n" +
-                "<tag k='highway' v='bus_stop'/>\n" +
+                "<tag k='highway' v='bus_stop' action='modify'/>\n" +
                 "</node>";
     }
 
@@ -105,12 +105,12 @@ public class OsmPrinter {
         if(st.getOsmVersion()!=null) {
             text += "<" + primitiveType + " " + changesetText + " id='" + nodeID + "' "
                     + geoAddress
-                    + " version='"+st.getOsmVersion() + "'>\n";
+                    + " version='"+st.getOsmVersion() + "' action='modify'>\n";
         }
         // mainly for create new node
         else {
             text += "<" + primitiveType + " " + changesetText + " id='" + nodeID + "' "
-                    + geoAddress + ">\n";
+                    + geoAddress + " action='modify'>\n";
             if(st.getTag(APPLICATION_CREATOR_KEY)!=null && !st.getTag(APPLICATION_CREATOR_KEY).equals("none")) {
                 text += "<tag k='"+APPLICATION_CREATOR_KEY+"' v='"+APPLICATION_CREATOR_NAME+"' />\n";
             }
@@ -146,12 +146,12 @@ public class OsmPrinter {
         // if modify, we need version number
         if(r.getOsmVersion()!=null) {
             text += "<relation " + changesetText + " id='" + routeID
-                    + "' version='"+route.getOsmVersion() + "'>\n";
+                    + "' version='"+route.getOsmVersion() + "' action='modify'>\n";
         }
         // mainly for create new relation
         else {
             text += "<relation  " + changesetText + "  id='" + routeID
-                    + "' version='"+ routeID +"'>\n";
+                    + "' version='"+ routeID +"' action='modify'>\n";
             text += "<tag k='"+APPLICATION_CREATOR_KEY+"' v='"+APPLICATION_CREATOR_NAME+"' />\n";
         }
         //add member
