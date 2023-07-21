@@ -14,7 +14,7 @@ import java.util.TreeMap;
  *
  * @author tenzap
  */
-public class RouteVariant extends OsmPrimitive {
+public class RouteVariant {
 
     String trip_id;
     String route_id;

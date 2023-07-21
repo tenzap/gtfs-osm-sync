@@ -104,14 +104,14 @@ public class Route extends OsmPrimitive implements Comparable{
     }
 
     public boolean compareOperatorName(Route o) {
-        return true; // Temporary hack.
-        /*if (o.getOperatorName()!=null && this.getOperatorName()!=null) {
+        if (o.getOperatorName()!=null && this.getOperatorName()!=null) {
             return OperatorInfo.isTheSameOperator(this.getOperatorName())
                     && OperatorInfo.isTheSameOperator(o.getOperatorName());
         }
-        return false;*/
+        return false;
     }
 
+    @Override
     public int compareTo(Object o){
         Route r = (Route) o;
         if (this.getRouteId().equals("missing") || r.getRouteId().equals("missing")) {
@@ -120,10 +120,12 @@ public class Route extends OsmPrimitive implements Comparable{
                 return 0;
         }
             
-        if(!this.getRouteId().equals("missing") && !r.getRouteId().equals("missing") &&  this.compareOperatorName(r) && r.getRouteId().equals(this.getRouteId())) {
+        if(!this.getRouteId().equals("missing") && !r.getRouteId().equals("missing") && this.compareOperatorName(r) && r.getRouteId().equals(this.getRouteId())) {
             return 0;
         }
-        return 1;
+        
+        return toString().compareTo(r.toString());
+        //return 1;
     }
 
     @Override
@@ -147,6 +149,6 @@ public class Route extends OsmPrimitive implements Comparable{
     public String toString(){
         if (routeId.equals("missing") && !getOsmId().isEmpty())
             return "missing (" + getOsmId() + ")";
-        return this.getRouteId();
+        return this.getRouteRef() + ": " + this.getRouteId();
     }
 }
