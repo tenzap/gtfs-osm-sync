@@ -292,6 +292,8 @@ public class MainForm extends javax.swing.JFrame implements PropertyChangeListen
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         operatorPanel.add(operatorRegexLabel, gridBagConstraints);
+
+        operatorRegexField.setText(".*");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 2;
