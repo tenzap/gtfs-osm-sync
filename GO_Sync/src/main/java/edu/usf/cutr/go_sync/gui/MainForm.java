@@ -541,7 +541,7 @@ public class MainForm extends javax.swing.JFrame implements PropertyChangeListen
             _operatorName = operatorNameField.getText();
             
             _operatorNameAbbreviate = operatorNameAbbField.getText();
-            _operatorRegex = null;
+            _operatorRegex = ".*";
 
             if (!_operatorName.isEmpty() && !_operatorNameAbbreviate.isEmpty() && !_fileDir.isEmpty()) {
                 new OperatorInfo(_operatorName, _operatorNameAbbreviate, _operatorAlias, _operatorRegex, _operatorNtdId, _gtfsIdDigit, _fileDir);
