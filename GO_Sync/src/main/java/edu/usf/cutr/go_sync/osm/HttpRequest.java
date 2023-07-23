@@ -35,6 +35,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.io.StringReader;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
@@ -168,7 +169,9 @@ public class HttpRequest {
             // get data from server
             //String s = sendRequest(hosts, urlSuffix, "GET", "");
         	String s = sendRequest(hosts, "", "POST", content);
-
+            PrintWriter out = new PrintWriter("osm_stops.xml");
+            out.println(s);
+            out.close();
             InputSource inputSource = new InputSource(new StringReader(s));
             // get data from file - need to remove this for REAL APPLICATION
 //            InputSource inputSource = new InputSource("DataFromServer.osm");
@@ -220,6 +223,9 @@ public class HttpRequest {
             // get data from server
             //String s = sendRequest(hosts, urlSuffix, "GET", "");
             String s = sendRequest(hosts, "", "POST", content);
+            PrintWriter out = new PrintWriter("osm_relations.xml");
+            out.println(s);
+            out.close();
             InputSource inputSource = new InputSource(new StringReader(s));
             // get data from file - need to remove this for REAL APPLICATION
 //            InputSource inputSource = new InputSource("DataFromServerRELATION.osm");
