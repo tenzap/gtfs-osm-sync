@@ -139,8 +139,8 @@ public class RouteVariant {
         return route_long_name;
     }
 
-    public void setRoute_long_name(String route_long_name) {
-        this.route_long_name = route_long_name;
-    }
+    /*public String getVariantIdForDisplay() {
+        return getRoute_short_name() + "|" + trip_id;
+    }*/
 
 }
