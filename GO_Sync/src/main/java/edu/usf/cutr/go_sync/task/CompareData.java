@@ -1382,7 +1382,7 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
             arr.addAll(entry.getValue());
             reportArrays.put(key, arr);
         }
-    	ReportViewer rv = new ReportViewer(GTFSstops, reportArrays, upload, modify, delete, routes, agencyRoutes, existingRoutes, taskOutput);
+        ReportViewer rv = new ReportViewer(GTFSstops, reportArrays, upload, modify, delete, reportRoute, routes, agencyRoutes, existingRoutes, taskOutput);
         String info = "Active OSM bus stop mappers:\n"+osmActiveUsers.toString()+"\n\n";
         info += "There are currently "+OSMNodes.size()+" OSM stops in the region\n\n";
         info += "Transit agency GTFS dataset has "+GTFSstops.size()+" stops";
