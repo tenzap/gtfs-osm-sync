@@ -1105,16 +1105,19 @@
                   <SubComponents>
                     <Component class="javax.swing.JCheckBox" name="dontReplaceExistingOSMRouteColorCb">
                       <Properties>
+                        <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="Don&apos;t replace existing route color in OSM"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="dontAddGtfsRouteTextColorCb">
                       <Properties>
+                        <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="Don&apos;t add Gtfs &apos;route_text_color&apos; to OSM"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="dontAddGtfsAgencyIdCb">
                       <Properties>
+                        <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="Don&apos;t add Gtfs &apos;agency_id&apos; to OSM"/>
                       </Properties>
                     </Component>
@@ -1159,6 +1162,7 @@
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="removePlatformsNotInGtfsFromOSMRelationCb">
                       <Properties>
+                        <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="Remove platform nodes without Gtfs match"/>
                       </Properties>
                     </Component>
