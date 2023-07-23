@@ -54,6 +54,7 @@ import edu.usf.cutr.go_sync.tools.OsmFormatter;
 import edu.usf.cutr.go_sync.tag_defs;
 import edu.usf.cutr.go_sync.tools.parser.NodeWayAttr;
 import java.io.File;
+import java.util.EnumSet;
 
 /**
  *
@@ -760,6 +761,14 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
                         r.addTags(osmtag);
                     } else {
                         r.setStatus("e");
+                    }
+
+                    EnumSet<ReportViewer.MemberProcessingOptions> strategy = EnumSet.of(
+                            ReportViewer.MemberProcessingOptions.DONT_REPLACE_EXISING_OSM_COLOR);
+                    if (strategy.contains(ReportViewer.MemberProcessingOptions.DONT_REPLACE_EXISING_OSM_COLOR)) {
+                        String osmColor = (String)osmtag.get(tag_defs.OSM_COLOUR_KEY);
+                        if (osmColor != null && !osmColor.isEmpty())
+                            r.addAndOverwriteTag(tag_defs.OSM_COLOUR_KEY, osmColor);
                     }
 
                     // Put the new
