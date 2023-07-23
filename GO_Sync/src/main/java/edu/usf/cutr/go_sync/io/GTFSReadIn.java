@@ -437,10 +437,12 @@ public class GTFSReadIn {
 
                 Integer sequence_id = Integer.valueOf(csvRecord.get(keysIndex.get("stop_sequence")));
                 String stop_id = csvRecord.get(keysIndex.get("stop_id"));
+                String arrival_time = csvRecord.get(keysIndex.get("arrival_time"));
+                String departure_time = csvRecord.get(keysIndex.get("departure_time"));
                 String pickup_type = csvRecord.get(keysIndex.get("pickup_type"));
                 String drop_off_type = csvRecord.get(keysIndex.get("drop_off_type"));
 
-                rv.addStop(sequence_id, stop_id, stopsMap.get(stop_id).getStopName(), pickup_type, drop_off_type);
+                rv.addStop(sequence_id, stop_id, stopsMap.get(stop_id).getStopName(), arrival_time, departure_time, pickup_type, drop_off_type);
             }
             // We finished reading the file, save the last trip we read.
             insertRouteVariantToAllRouteVariants(prev_trip_id, rv, allRouteVariants);
@@ -454,8 +456,7 @@ public class GTFSReadIn {
                 RouteVariant current_rv = rv_entry.getValue();
                 String route_id = tripIDs.get(current_rv.getTrip_id());
                 current_rv.setRoute_id(route_id);
-                current_rv.setRoute_short_name(routes.get(route_id).getRouteRef());
-                current_rv.setRoute_long_name(routes.get(route_id).getTag("gtfs:name"));
+                current_rv.setRoute(routes.get(route_id));
             }
 
         } catch (IOException e) {
