@@ -359,12 +359,15 @@ public class MainForm extends javax.swing.JFrame implements PropertyChangeListen
         routeOptionsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Route options"));
         routeOptionsPanel.setLayout(new javax.swing.BoxLayout(routeOptionsPanel, javax.swing.BoxLayout.Y_AXIS));
 
+        dontReplaceExistingOSMRouteColorCb.setSelected(true);
         dontReplaceExistingOSMRouteColorCb.setText("Don't replace existing route color in OSM");
         routeOptionsPanel.add(dontReplaceExistingOSMRouteColorCb);
 
+        dontAddGtfsRouteTextColorCb.setSelected(true);
         dontAddGtfsRouteTextColorCb.setText("Don't add Gtfs 'route_text_color' to OSM");
         routeOptionsPanel.add(dontAddGtfsRouteTextColorCb);
 
+        dontAddGtfsAgencyIdCb.setSelected(true);
         dontAddGtfsAgencyIdCb.setText("Don't add Gtfs 'agency_id' to OSM");
         routeOptionsPanel.add(dontAddGtfsAgencyIdCb);
 
@@ -389,6 +392,7 @@ public class MainForm extends javax.swing.JFrame implements PropertyChangeListen
         skipNodesWithRoleStopCb.setActionCommand("Remove nodes with 'stop' role");
         routeMemberOptionPanel.add(skipNodesWithRoleStopCb);
 
+        removePlatformsNotInGtfsFromOSMRelationCb.setSelected(true);
         removePlatformsNotInGtfsFromOSMRelationCb.setText("Remove platform nodes without Gtfs match");
         routeMemberOptionPanel.add(removePlatformsNotInGtfsFromOSMRelationCb);
 
