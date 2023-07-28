@@ -951,7 +951,6 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
             osmtag.putAll(OSMTags.get(osmindex));
             String osmOperator = (String)osmtag.get(tag_defs.OSM_NETWORK_KEY);
             String osmStopID = (String)osmtag.get("gtfs_id");
-            String osmPlatformType = (String)osmtag.get(tag_defs.OSM_STOP_TYPE_KEY);
             //add leading 0's
             if(osmStopID!=null) {
                 if (!osmStopID.equals("missing")) {
@@ -1142,7 +1141,6 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
                             }
                             // if same lat and lon --> possible same exact stop --> add gtfs_id, operator, stop_name
                             else {
-                              if (osmPlatformType.equals(gtfsStop.getOsmPublicTransportType())) {
                                 Stop ns = new Stop(gtfsStop);
                                 ns.addTags(osmtag);
                                 ns.setOsmId(node.getValue("id"));
@@ -1167,9 +1165,6 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
                                 ns.setReportCategory("MODIFY");
                                 addToReport(ns, es, true);
                                 break;
-                              } else {
-                                  // TODO
-                              }
                             }
                           }
                         }
