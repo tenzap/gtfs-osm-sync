@@ -502,7 +502,7 @@ public class MainForm extends javax.swing.JFrame implements PropertyChangeListen
         gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         netexPanel.add(netexZipFileLabel, gridBagConstraints);
 
-        netexZipFile.setText("/mnt/packages/downloads/fluo-grand-est-fluo68-netex-2023-07.zip");
+        netexZipFile.setText("C:\\Users\\Fffifu\\Documents\\gtfs-osm-sync\\GO_Sync\\fluo-grand-est-fluo68-netex.zip");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
