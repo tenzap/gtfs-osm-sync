@@ -412,6 +412,7 @@ public class MainForm extends javax.swing.JFrame implements PropertyChangeListen
 
         stopOptionsPanel.add(distanceThresholdPanel);
 
+        skipGtfsStationsCb.setSelected(true);
         skipGtfsStationsCb.setText("Skip GTFS stops of location_type 'station'");
         stopOptionsPanel.add(skipGtfsStationsCb);
 
