@@ -196,6 +196,15 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
         boolean isFirst = true;
         while (it.hasNext()) {
             Stop tempStop = it.next();
+            // Skip unexpected values:
+            if (Double.parseDouble(tempStop.getLat()) < 46) {
+                System.err.println("Unexpected latitude for " + tempStop.getStopID());
+                continue;
+            }
+            if (Double.parseDouble(tempStop.getLon()) < 6) {
+                System.err.println("Unexpected longitude for " + tempStop.getStopID());
+                continue;
+            }
             if (isFirst) {
                 isFirst = false;
                 minLat = Double.parseDouble(tempStop.getLat());
