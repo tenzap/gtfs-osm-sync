@@ -1142,7 +1142,7 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
                             }
                             // if same lat and lon --> possible same exact stop --> add gtfs_id, operator, stop_name
                             else {
-                              if(node.getValue("public_transport") != null && node.getValue("public_transport").equals("platform")) {
+                              if (osmPlatformType.equals(gtfsStop.getOsmPublicTransportType())) {
                                 Stop ns = new Stop(gtfsStop);
                                 ns.addTags(osmtag);
                                 ns.setOsmId(node.getValue("id"));
