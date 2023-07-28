@@ -1555,7 +1555,7 @@
                 </Component>
                 <Component class="javax.swing.JTextField" name="netexZipFile">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="/mnt/packages/downloads/fluo-grand-est-fluo68-netex-2023-07.zip"/>
+                    <Property name="text" type="java.lang.String" value="C:\u005cUsers\u005cFffifu\u005cDocuments\u005cgtfs-osm-sync\u005cGO_Sync\u005cfluo-grand-est-fluo68-netex.zip" containsInvalidXMLChars="true"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
