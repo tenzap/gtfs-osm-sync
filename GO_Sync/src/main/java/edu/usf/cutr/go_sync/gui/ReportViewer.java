@@ -3052,6 +3052,7 @@ public class ReportViewer extends javax.swing.JFrame implements TableModelListen
         // Move to next route.
         if (gtfsRoutesComboBox.getSelectedIndex() < gtfsRoutesComboBox.getItemCount() - 1) {
             gtfsRoutesComboBox.setSelectedIndex(gtfsRoutesComboBox.getSelectedIndex() + 1);
+            gtfsRoutesComboBox.requestFocusInWindow();
         }
 
 }//GEN-LAST:event_saveChangeRouteButtonActionPerformed
