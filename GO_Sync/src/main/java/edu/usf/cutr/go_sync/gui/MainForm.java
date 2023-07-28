@@ -550,6 +550,8 @@ public class MainForm extends javax.swing.JFrame implements PropertyChangeListen
 
         citiesWithoutTownPrefixLabel.setText("Cities for which station name should not be prefixed by town (separate names by ';')");
         citiesWithoutTownPrefixPanel.add(citiesWithoutTownPrefixLabel);
+
+        citiesWithoutTownPrefixField.setText("Colmar;Mulhouse;Saint-louis");
         citiesWithoutTownPrefixPanel.add(citiesWithoutTownPrefixField);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
