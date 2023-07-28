@@ -1089,6 +1089,7 @@
                     </Container>
                     <Component class="javax.swing.JCheckBox" name="skipGtfsStationsCb">
                       <Properties>
+                        <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="Skip GTFS stops of location_type &apos;station&apos;"/>
                       </Properties>
                     </Component>
