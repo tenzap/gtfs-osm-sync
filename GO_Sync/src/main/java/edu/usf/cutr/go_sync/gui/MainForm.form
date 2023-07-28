@@ -1833,6 +1833,9 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="citiesWithoutTownPrefixField">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Colmar;Mulhouse;Saint-louis"/>
+                      </Properties>
                     </Component>
                   </SubComponents>
                 </Container>
