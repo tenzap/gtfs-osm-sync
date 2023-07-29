@@ -108,6 +108,7 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
     private HttpRequest osmRequest;
     private HashSet<String> osmActiveUsers = new HashSet<String>();
     private Hashtable<String,String> osmIdToGtfsId = new Hashtable<String,String>();
+    private HashMap<String, Integer> osmIdToOSMNodexIndex = new HashMap<>();
 
     private HashMap <String, TreeMap> osmRouteVariantScoreByGtfsRoute = new HashMap<>();;
     // OsmIndex - List of GtfsMatches
@@ -742,7 +743,17 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
                 tempem.addAll(em);
                 for (RelationMember m : tempem) {
                     if(this.flagIsDone) return;
-                    m.setGtfsId((String)osmIdToGtfsId.get(m.getRef()));
+                    if (osmIdToGtfsId.get(m.getRef()) != null) {
+                        m.setGtfsId((String) osmIdToGtfsId.get(m.getRef()));
+                    } else {
+                        Integer osmNodexIndex = osmIdToOSMNodexIndex.get(m.getRef());
+                        if (osmNodexIndex != null) {
+                            String gtfsId = (String) OSMTags.get(osmNodexIndex).get(tag_defs.OSM_STOP_ID_KEY);
+                            if (gtfsId != null && !gtfsId.isEmpty()) {
+                                m.setGtfsId(gtfsId);
+                            }
+                        }
+                    }
                     er.addOsmMember(m);
                 }
 
@@ -759,7 +770,17 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
                         if (this.flagIsDone) {
                             return;
                         }
-                        m.setGtfsId((String) osmIdToGtfsId.get(m.getRef()));
+                        if (osmIdToGtfsId.get(m.getRef()) != null) {
+                            m.setGtfsId((String) osmIdToGtfsId.get(m.getRef()));
+                        } else {
+                            Integer osmNodexIndex = osmIdToOSMNodexIndex.get(m.getRef());
+                            if (osmNodexIndex != null) {
+                                String gtfsId = (String) OSMTags.get(osmNodexIndex).get(tag_defs.OSM_STOP_ID_KEY);
+                                if (gtfsId != null && !gtfsId.isEmpty()) {
+                                    m.setGtfsId(gtfsId);
+                                }
+                            }
+                        }
 
                         RelationMember matchMember = r.getOsmMember(m.getRef());
                         if (matchMember != null) {
@@ -825,7 +846,17 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
             tempem.addAll(em);
 
             for (RelationMember m : tempem) {
-                m.setGtfsId((String) osmIdToGtfsId.get(m.getRef()));
+                if (osmIdToGtfsId.get(m.getRef()) != null) {
+                    m.setGtfsId((String) osmIdToGtfsId.get(m.getRef()));
+                } else {
+                    Integer osmNodexIndex = osmIdToOSMNodexIndex.get(m.getRef());
+                    if (osmNodexIndex != null) {
+                        String gtfsId = (String) OSMTags.get(osmNodexIndex).get(tag_defs.OSM_STOP_ID_KEY);
+                        if (gtfsId != null && !gtfsId.isEmpty()) {
+                            m.setGtfsId(gtfsId);
+                        }
+                    }
+                }
                 er.addOsmMember(m);
 
                 /*RelationMember matchMember = r.getOsmMember(m.getRef());
@@ -993,6 +1024,7 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
             String version = Integer.toString(Integer.parseInt(node.getValue("version")));
             if (isOp) {
                 for (int gtfsindex=0; gtfsindex<GTFSstops.size(); gtfsindex++){
+                    osmIdToOSMNodexIndex.put(node.getValue("id"), osmindex);
                     if(this.flagIsDone) return;
                     Stop gtfsStop = GTFSstops.get(gtfsindex);
                     // Skip gtfs "stations"
