@@ -1184,6 +1184,13 @@
                     <Property name="axis" type="int" value="1"/>
                   </Layout>
                   <SubComponents>
+                    <Component class="javax.swing.JCheckBox" name="createAsPTv2Cb">
+                      <Properties>
+                        <Property name="selected" type="boolean" value="true"/>
+                        <Property name="text" type="java.lang.String" value="Create as PTv2 route"/>
+                        <Property name="actionCommand" type="java.lang.String" value="Move nodes before ways"/>
+                      </Properties>
+                    </Component>
                     <Component class="javax.swing.JCheckBox" name="dontReplaceExistingOSMRouteColorCb">
                       <Properties>
                         <Property name="selected" type="boolean" value="true"/>
@@ -1222,13 +1229,6 @@
                     <Property name="axis" type="int" value="1"/>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JCheckBox" name="moveNodesBeforeWaysCb">
-                      <Properties>
-                        <Property name="selected" type="boolean" value="true"/>
-                        <Property name="text" type="java.lang.String" value="Move node members before ways (required for PTv2)"/>
-                        <Property name="actionCommand" type="java.lang.String" value="Move nodes before ways"/>
-                      </Properties>
-                    </Component>
                     <Component class="javax.swing.JCheckBox" name="skipNodesWithRoleEmptyCb">
                       <Properties>
                         <Property name="selected" type="boolean" value="true"/>
@@ -1237,14 +1237,14 @@
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="skipNodesWithRoleStopCb">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Remove nodes with role &apos;stop&apos;"/>
+                        <Property name="text" type="java.lang.String" value="Remove nodes with role &apos;stop&apos; (only if PTv2 is enabled)"/>
                         <Property name="actionCommand" type="java.lang.String" value="Remove nodes with &apos;stop&apos; role"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="removePlatformsNotInGtfsFromOSMRelationCb">
                       <Properties>
                         <Property name="selected" type="boolean" value="true"/>
-                        <Property name="text" type="java.lang.String" value="Remove platform nodes without Gtfs match"/>
+                        <Property name="text" type="java.lang.String" value="Remove platform nodes without Gtfs match (only if PTv2 is enabled)"/>
                       </Properties>
                     </Component>
                   </SubComponents>
