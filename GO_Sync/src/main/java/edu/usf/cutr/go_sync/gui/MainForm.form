@@ -1198,11 +1198,13 @@
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="dontAddGtfsRouteTextColorCb">
                       <Properties>
+                        <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="Don&apos;t add Gtfs &apos;route_text_color&apos; to OSM"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="dontAddGtfsAgencyIdCb">
                       <Properties>
+                        <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="Don&apos;t add Gtfs &apos;agency_id&apos; to OSM"/>
                       </Properties>
                     </Component>
