@@ -162,7 +162,13 @@ public class GTFSReadIn {
                  //add leading 0's to gtfs_id
                     String tempStopId = OsmFormatter.getValidBusStopId(elements[stopIdKey]);
                     //System.out.println("Reading stop from gtfs: " + tempStopId.toString());
-                    NetexStopElement netexObject = getMatchingNetexObject(elements[locationTypeKey], elements[stopIdKey], elements[parentStationKey], elements[stopLatKey],elements[stopLonKey], elements[stopNameKey]);
+                    String parentStation;
+                    if (parentStationKey == -1) {
+                        parentStation = null;
+                    } else {
+                        parentStation = elements[parentStationKey];
+                    }
+                    NetexStopElement netexObject = getMatchingNetexObject(elements[locationTypeKey], elements[stopIdKey], parentStation, elements[stopLatKey],elements[stopLonKey], elements[stopNameKey]);
                     Stop s = new Stop("node", tempStopId, agencyName, elements[stopNameKey],elements[stopLatKey],elements[stopLonKey], netexObject);
                     HashSet<String> keysn = new HashSet<String>(keysIndex.keySet());
                     Iterator it = keysn.iterator();
