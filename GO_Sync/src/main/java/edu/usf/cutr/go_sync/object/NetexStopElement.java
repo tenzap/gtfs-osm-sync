@@ -96,7 +96,7 @@ public class NetexStopElement {
         if (cities != null) {
             cities.replaceAll(String::toLowerCase);
         }
-        if (cities != null && cities.contains(town.toLowerCase())) {
+        if (cities != null && town != null && cities.contains(town.toLowerCase())) {
             return getLogicalNameWithoutTown(cities);
         } else {
             return getLogicalNameWithTown(cities);
@@ -134,7 +134,7 @@ public class NetexStopElement {
         if (cities != null) {
             cities.replaceAll(String::toLowerCase);
         }
-        if (cities != null && cities.contains(town.toLowerCase())) {
+        if (cities != null && town != null && cities.contains(town.toLowerCase())) {
             return getLogicalAltNamesWithTown(cities);
         } else {
             return getLogicalAltNamesWithoutTown(cities);
