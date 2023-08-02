@@ -960,20 +960,28 @@ public class MainForm extends javax.swing.JFrame implements PropertyChangeListen
 
             while ((next_file = zip.getNextEntry()) != null) {
 
-                System.out.println("Reading the file: " + next_file.getName() + " Size: " + next_file.getSize());
+                if (next_file.isDirectory()) {
+                    try {
+                        (new File(unzipLocation + next_file.getName())).mkdirs(); //create the directory
+                    } catch (SecurityException ex) {
+                        System.err.println(String.format("Unable to create directory %s.", unzipLocation + next_file.getName()));
+                        return false;
+                    }
+                } else {
+                    System.out.println("Reading the file: " + next_file.getName() + " Size: " + next_file.getSize());
 
-                out = new FileOutputStream(unzipLocation + next_file.getName());
-                byte[] buf = new byte[1024];
-                int len;
+                    out = new FileOutputStream(unzipLocation + next_file.getName());
+                    byte[] buf = new byte[1024];
+                    int len;
 
-                while ((len = zip.read(buf)) > 0) {
-                    out.write(buf, 0, len);
+                    while ((len = zip.read(buf)) > 0) {
+                        out.write(buf, 0, len);
+                    }
+
+                    out.close();
+                    //out.flush();
+                    //do any processing here if you’d like
                 }
-
-
-                out.close();
-                //out.flush();
-                //do any processing here if you’d like
                 zip.closeEntry();
             }
             zip.close();
