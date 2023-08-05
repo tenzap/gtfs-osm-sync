@@ -24,7 +24,36 @@ public class NetexQuay extends NetexStopElement {
     }
 
     public String getIdAsGtfs() {
-        return id.split(":")[3];
+        String return_value = null;
+        switch (OperatorInfo.getFullName()) {
+            case "Fluo Grand Est 67":
+            case "FLUO 68":
+            case "Fluo88":
+                return_value = getIdAsGtfsFRFluo();
+                break;
+            case "MOBIGO (58)":
+                return_value = getIdAsGtfsFRMobigo();
+                break;
+            default:
+                throw new UnsupportedOperationException(String.format("Method to extract gtfs id inside netex file not set for %s. Please set it in code nearby the NO_METHOD_TO_FIND_GTFSID_IN_NETEX_QUAY_ID or don't use the netex file.", OperatorInfo.getFullName()));
+        }
+        return return_value;
+    }
+
+    private String getIdAsGtfsFRFluo() {
+        if (id.split(":").length >= 4) {
+            return id.split(":")[3];
+        }
+        System.out.println(String.format("Unexpected format for Quay id %s", id));
+        return null;
+    }
+
+    private String getIdAsGtfsFRMobigo() {
+        if (id.split(":").length >= 3) {
+            return id.split(":")[2];
+        }
+        System.out.println(String.format("Unexpected format for Quay id %s", id));
+        return null;
     }
 
     public String printContent() {
