@@ -41,6 +41,7 @@ public class NetexQuay extends NetexStopElement {
     }
 
     private String getIdAsGtfsFRFluo() {
+        // Example: <Quay id="FR:68171:Quay:6862167:CG68" version="1">
         if (id.split(":").length >= 4) {
             return id.split(":")[3];
         }
@@ -49,6 +50,7 @@ public class NetexQuay extends NetexStopElement {
     }
 
     private String getIdAsGtfsFRMobigo() {
+        // Example: <Quay id="FR:Quay:300591:" version="any">
         if (id.split(":").length >= 3) {
             return id.split(":")[2];
         }

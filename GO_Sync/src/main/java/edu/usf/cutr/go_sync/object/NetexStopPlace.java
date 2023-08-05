@@ -55,18 +55,19 @@ public class NetexStopPlace extends NetexStopElement {
     }
 
     private String getGtfsEquivalentIdFRFluo() {
+        // Example: <StopPlace id="FR:68247:StopPlace:log140712:GRANDEST2" version="1">
         String[] base_id;
         if (parentSiteRef != null) {
             base_id = parentSiteRef.split(":");
-            if (base_id.length >= 3) {
-                return base_id[2].replace("log", "S");
+            if (base_id.length >= 4) {
+                return base_id[3].replace("log", "S");
             }
         } else {
             //if (childSiteRef != null) {
             // Case when we are on a logical StopPlace or a parentStopPlace
             base_id = id.split(":");
-            if (base_id.length >= 3) {
-                return base_id[2].replace("log", "S");
+            if (base_id.length >= 4) {
+                return base_id[3].replace("log", "S");
             }
             //}
         }
@@ -75,6 +76,7 @@ public class NetexStopPlace extends NetexStopElement {
     }
 
     private String getGtfsEquivalentIdFRMobigo() {
+        // Example: <StopPlace id="FR:StopPlace:Navitia_300714_bus:" version="any">
         String[] base_id;
         if (parentSiteRef != null) {
             base_id = parentSiteRef.split(":");
