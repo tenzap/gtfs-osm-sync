@@ -115,8 +115,8 @@ private ArrayList<Hashtable> OSMRelationTags = new ArrayList<Hashtable>();
     private double minLat=0, minLon=0, maxLat=0, maxLon=0;
     private HttpRequest osmRequest;
     private HashSet<String> osmActiveUsers = new HashSet<String>();
-    private Hashtable<String,String> osmIdToGtfsId = new Hashtable<String,String>();
-    private HashMap<String, Integer> osmIdToOSMNodexIndex = new HashMap<>();
+    private ConcurrentHashMap<String,String> osmIdToGtfsId = new ConcurrentHashMap<String,String>();
+    private ConcurrentHashMap<String, Integer> osmIdToOSMNodexIndex = new ConcurrentHashMap<>();
 
     private HashMap <String, TreeMap> osmRouteVariantScoreByGtfsRoute = new HashMap<>();;
     // OsmIndex - List of GtfsMatches
